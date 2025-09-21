@@ -1,52 +1,39 @@
-import React from 'react';
-import { Link } from '../router/RouterProvider';
+import { Link } from 'react-router-dom';
+import mark from '../assets/rove-mark.svg';
 
-const footerLinks = [
-  { label: 'Shop', href: '/products' },
-  { label: 'About', href: '/about' },
-  { label: 'Privacy', href: '/privacy' },
-  { label: 'Terms', href: '/terms' }
-];
-
-const socialLinks = [
-  { label: 'Instagram', href: 'https://instagram.com' },
-  { label: 'TikTok', href: 'https://tiktok.com' },
-  { label: 'Pinterest', href: 'https://pinterest.com' }
-];
-
-export const Footer: React.FC = () => (
-  <footer className="border-t border-white/10 bg-black py-16">
-    <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 md:flex-row md:justify-between">
-      <div className="max-w-md space-y-4">
-        <span className="text-lg font-semibold uppercase tracking-[0.4em] text-white">ROVE</span>
-        <p className="text-sm text-white/70">
-          ROVE crafts precision eyewear that balances timeless silhouettes with modern engineering. Designed in Los
-          Angeles, worn worldwide.
+const Footer = () => (
+  <footer className="border-t border-neutral-200 bg-white py-14">
+    <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-10 px-6 md:grid-cols-[1.2fr_1fr]">
+      <div className="space-y-4">
+        <div className="inline-flex items-center gap-3">
+          <img src={mark} alt="ROVE" className="h-10 w-10" />
+          <span className="text-lg font-semibold tracking-[0.5em] text-neutral-900">ROVE</span>
+        </div>
+        <p className="max-w-sm text-sm text-neutral-500">
+          Modern eyewear engineered for clarity, comfort, and understated luxury. Hand-assembled in Los Angeles with ocean-ready coatings.
         </p>
+        <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">© {new Date().getFullYear()} ROVE Atelier</p>
       </div>
-      <div className="flex flex-col gap-8 text-sm uppercase tracking-[0.3em] text-white/60 md:flex-row">
-        <nav className="space-y-3">
-          {footerLinks.map((link) => (
-            <div key={link.href}>
-              <Link to={link.href} className="transition hover:text-white">
-                {link.label}
-              </Link>
-            </div>
-          ))}
-        </nav>
-        <nav className="space-y-3">
-          {socialLinks.map((link) => (
-            <div key={link.href}>
-              <a href={link.href} target="_blank" rel="noreferrer" className="transition hover:text-white">
-                {link.label}
-              </a>
-            </div>
-          ))}
-        </nav>
+      <div className="grid grid-cols-2 gap-8 text-xs uppercase tracking-[0.3em] text-neutral-500 md:justify-items-end">
+        <div className="space-y-3">
+          <p className="text-neutral-900">Navigate</p>
+          <div className="flex flex-col gap-2">
+            <Link to="/products">Collection</Link>
+            <Link to="/about">About</Link>
+            <Link to="/cart">Cart</Link>
+          </div>
+        </div>
+        <div className="space-y-3">
+          <p className="text-neutral-900">Policies</p>
+          <div className="flex flex-col gap-2">
+            <Link to="/privacy">Privacy</Link>
+            <Link to="/terms">Terms</Link>
+            <Link to="/checkout">Checkout</Link>
+          </div>
+        </div>
       </div>
-    </div>
-    <div className="mt-12 text-center text-xs uppercase tracking-[0.3em] text-white/40">
-      © {new Date().getFullYear()} ROVE Eyewear. All rights reserved.
     </div>
   </footer>
 );
+
+export default Footer;

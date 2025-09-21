@@ -1,46 +1,100 @@
 [
   {
-    "id": "rove-aviator-black",
-    "name": "ROVE Aviator Black",
-    "price": 245,
-    "category": "Aviators",
+    "id": "rove-aurora",
+    "name": "Aurora Aviator",
+    "price": 210,
+    "category": "Aviator",
     "image": "/products/aviator.svg",
-    "description": "Titanium aviator silhouette with gradient CR-39 lenses and adjustable nose pads for all-day comfort.",
-    "lensWidth": 55,
-    "bridgeWidth": 14,
-    "templeLength": 145
+    "description": "Feather-light titanium frames with gradient sapphire lenses for infinite horizons.",
+    "colors": ["Champagne Gold", "Graphite"],
+    "sizes": ["52-18-145"],
+    "gallery": [
+      {
+        "src": "/products/aviator.svg",
+        "alt": "Aurora Aviator front view",
+        "background": "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)"
+      },
+      {
+        "src": "/products/aviator.svg",
+        "alt": "Aurora Aviator angled",
+        "background": "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)"
+      },
+      {
+        "src": "/products/aviator.svg",
+        "alt": "Aurora Aviator lens detail",
+        "background": "linear-gradient(135deg, #111827 0%, #0f172a 100%)"
+      }
+    ]
   },
   {
-    "id": "rove-browline-gold",
-    "name": "ROVE Browline Gold",
-    "price": 265,
-    "category": "Browline",
-    "image": "/products/browline.svg",
-    "description": "Hand-polished acetate brow paired with stainless lower rims for a mid-century inspired statement.",
-    "lensWidth": 52,
-    "bridgeWidth": 18,
-    "templeLength": 148
+    "id": "rove-horizon",
+    "name": "Horizon Wayfarer",
+    "price": 185,
+    "category": "Wayfarer",
+    "image": "/products/wayfarer.svg",
+    "description": "Precision-crafted acetate with sculpted temples for a bold, everyday silhouette.",
+    "colors": ["Deep Onyx", "Coastal Tortoise"],
+    "sizes": ["50-20-150"],
+    "gallery": [
+      {
+        "src": "/products/wayfarer.svg",
+        "alt": "Horizon Wayfarer front view",
+        "background": "linear-gradient(135deg, #0b1120 0%, #1e293b 100%)"
+      },
+      {
+        "src": "/products/wayfarer.svg",
+        "alt": "Horizon Wayfarer hinge detail",
+        "background": "linear-gradient(135deg, #1e293b 0%, #111827 100%)"
+      }
+    ]
   },
   {
-    "id": "rove-square-matte",
-    "name": "ROVE Square Matte",
-    "price": 225,
+    "id": "rove-parallel",
+    "name": "Parallel Square",
+    "price": 195,
     "category": "Square",
     "image": "/products/square.svg",
-    "description": "Squared silhouette with sculpted temples and custom titanium core for lightweight durability.",
-    "lensWidth": 50,
-    "bridgeWidth": 20,
-    "templeLength": 147
+    "description": "Architectural square frames with anti-glare lenses engineered for city light.",
+    "colors": ["Brushed Steel", "Luxe Umber"],
+    "sizes": ["54-19-145"],
+    "gallery": [
+      {
+        "src": "/products/square.svg",
+        "alt": "Parallel Square flatlay",
+        "background": "linear-gradient(135deg, #0f172a 0%, #0b1120 100%)"
+      },
+      {
+        "src": "/products/square.svg",
+        "alt": "Parallel Square profile",
+        "background": "linear-gradient(135deg, #1f2937 0%, #0f172a 100%)"
+      },
+      {
+        "src": "/products/square.svg",
+        "alt": "Parallel Square details",
+        "background": "linear-gradient(135deg, #111827 0%, #1f2937 100%)"
+      }
+    ]
   },
   {
-    "id": "rove-wayfarer-navy",
-    "name": "ROVE Wayfarer Navy",
-    "price": 235,
-    "category": "Square",
-    "image": "/products/wayfarer.svg",
-    "description": "A bolder take on the classic wayfarer with marine acetate and polarized lenses.",
-    "lensWidth": 51,
-    "bridgeWidth": 19,
-    "templeLength": 146
+    "id": "rove-strata",
+    "name": "Strata Browline",
+    "price": 205,
+    "category": "Browline",
+    "image": "/products/browline.svg",
+    "description": "Layered metal and acetate browline with sculpted bridge for elevated minimalism.",
+    "colors": ["Polished Silver", "Midnight Navy"],
+    "sizes": ["51-19-146"],
+    "gallery": [
+      {
+        "src": "/products/browline.svg",
+        "alt": "Strata Browline front",
+        "background": "linear-gradient(135deg, #0f172a 0%, #1f2937 100%)"
+      },
+      {
+        "src": "/products/browline.svg",
+        "alt": "Strata Browline angled",
+        "background": "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)"
+      }
+    ]
   }
 ]

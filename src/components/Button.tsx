@@ -1,48 +1,44 @@
-import React from 'react';
-import clsx from 'clsx';
-import { motion, type HTMLMotionProps } from 'framer-motion';
+import { ButtonHTMLAttributes, forwardRef } from 'react';
+import { cn } from '../utils/cn';
 
-type ButtonVariant = 'primary' | 'secondary' | 'ghost';
-type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
+export type ButtonSize = 'sm' | 'md' | 'lg';
 
-const baseStyles = 'inline-flex items-center justify-center rounded-full transition-all font-semibold tracking-wide uppercase';
-
-const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-white text-black hover:bg-brand.light hover:text-brand-accent shadow-lg',
-  secondary: 'bg-brand.accent text-white hover:bg-white/10 border border-white/20',
-  ghost: 'bg-transparent text-white hover:bg-white/10'
-};
-
-const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'px-4 py-2 text-xs',
-  md: 'px-6 py-3 text-sm',
-  lg: 'px-8 py-4 text-sm md:text-base'
-};
-
-export interface ButtonProps extends HTMLMotionProps<'button'> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
-  loading?: boolean;
-  children?: React.ReactNode;
 }
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, children, variant = 'primary', size = 'md', loading = false, disabled, ...props }, ref) => (
-    <motion.button
-      ref={ref}
-      whileTap={{ scale: 0.97 }}
-      className={clsx(baseStyles, variantStyles[variant], sizeStyles[size], className, {
-        'cursor-not-allowed opacity-70': disabled || loading
-      })}
-      disabled={disabled || loading}
-      {...props}
-    >
-      {loading && (
-        <span className="mr-2 inline-block h-3 w-3 animate-spin rounded-full border-2 border-white border-t-transparent" />
-      )}
-      {children}
-    </motion.button>
-  )
+export const buttonStyles = (
+  variant: ButtonVariant = 'primary',
+  size: ButtonSize = 'md',
+  className?: string,
+) => {
+  const base =
+    'inline-flex items-center justify-center gap-2 rounded-full font-semibold uppercase tracking-[0.3em] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50';
+
+  const variants: Record<ButtonVariant, string> = {
+    primary: 'bg-neutral-900 text-white hover:bg-neutral-700',
+    secondary: 'bg-slate-900/10 text-neutral-900 hover:bg-slate-900/20',
+    outline: 'border border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-white',
+    ghost: 'text-neutral-500 hover:text-neutral-900',
+  };
+
+  const sizes: Record<ButtonSize, string> = {
+    sm: 'px-4 py-2 text-[0.6rem]',
+    md: 'px-5 py-3 text-[0.65rem]',
+    lg: 'px-6 py-3.5 text-[0.7rem]',
+  };
+
+  return cn(base, variants[variant], sizes[size], className);
+};
+
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant = 'primary', size = 'md', type = 'button', ...props }, ref) => (
+    <button ref={ref} type={type} className={buttonStyles(variant, size, className)} {...props} />
+  ),
 );
 
 Button.displayName = 'Button';
+
+export default Button;

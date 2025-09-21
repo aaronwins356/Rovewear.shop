@@ -1,18 +1,17 @@
-export type ProductCategory = 'Aviators' | 'Browline' | 'Square';
+export interface ProductImage {
+  src: string;
+  alt?: string;
+  background?: string;
+}
 
 export interface Product {
   id: string;
   name: string;
   price: number;
-  category: ProductCategory;
+  category: string;
   image: string;
   description: string;
-  lensWidth: number;
-  bridgeWidth: number;
-  templeLength: number;
-}
-
-export interface CartLineItem {
-  product: Product;
-  quantity: number;
+  colors?: string[];
+  sizes?: string[];
+  gallery?: ProductImage[];
 }

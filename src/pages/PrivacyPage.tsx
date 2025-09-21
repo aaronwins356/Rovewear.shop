@@ -1,22 +1,31 @@
-import React from 'react';
-import { Seo } from '../components/Seo';
-
-export const PrivacyPage: React.FC = () => (
-  <div className="mx-auto max-w-3xl px-6 pb-24 pt-12 space-y-8">
-    <Seo title="Privacy Policy | ROVE Eyewear" />
-    <h1 className="text-4xl uppercase tracking-[0.3em]">Privacy Policy</h1>
-    <p className="text-sm text-white/70">
-      ROVE collects only the data required to deliver your eyewear and provide concierge support. We do not sell or rent
-      personal information. Data is processed through secure, PCI-compliant partners including Stripe and Shopify for
-      payment processing.
-    </p>
-    <p className="text-sm text-white/70">
-      When you create an account or join our newsletter, we store your preferences to personalize future releases. You
-      may request deletion of your account at any time by contacting privacy@rovewear.shop.
-    </p>
-    <p className="text-sm text-white/70">
-      Cookies are used for analytics and personalization. You can adjust preferences through your browser or by emailing
-      support@rovewear.shop.
-    </p>
+const PrivacyPage = () => (
+  <div className="mx-auto w-full max-w-4xl space-y-10 px-6 py-24">
+    <div className="space-y-4">
+      <p className="text-xs uppercase tracking-[0.4em] text-neutral-400">Privacy</p>
+      <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">We protect your clarity.</h1>
+      <p className="text-sm text-neutral-500">
+        ROVE respects your privacy. This template outlines how we collect, use, and safeguard information when you interact with the storefront.
+      </p>
+    </div>
+    <section className="space-y-4 rounded-[3rem] border border-neutral-200 bg-white p-10">
+      <h2 className="text-sm font-semibold uppercase tracking-[0.35em] text-neutral-500">Data we collect</h2>
+      <p className="text-sm text-neutral-500">
+        Order details, contact information, and opt-in marketing preferences collected during checkout or newsletter sign-up. Payment data stays with your processor.
+      </p>
+    </section>
+    <section className="space-y-4 rounded-[3rem] border border-neutral-200 bg-white p-10">
+      <h2 className="text-sm font-semibold uppercase tracking-[0.35em] text-neutral-500">How we use it</h2>
+      <p className="text-sm text-neutral-500">
+        To fulfil orders, provide support, and tailor future releases. We never sell personal data and only share with logistics partners when essential for delivery.
+      </p>
+    </section>
+    <section className="space-y-4 rounded-[3rem] border border-neutral-200 bg-white p-10">
+      <h2 className="text-sm font-semibold uppercase tracking-[0.35em] text-neutral-500">Your controls</h2>
+      <p className="text-sm text-neutral-500">
+        Customers can request data exports or deletion at any time. Update your preferences via your account portal or by contacting our concierge team.
+      </p>
+    </section>
   </div>
 );
+
+export default PrivacyPage;

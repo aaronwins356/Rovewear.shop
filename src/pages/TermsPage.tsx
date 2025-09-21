@@ -1,21 +1,31 @@
-import React from 'react';
-import { Seo } from '../components/Seo';
-
-export const TermsPage: React.FC = () => (
-  <div className="mx-auto max-w-3xl px-6 pb-24 pt-12 space-y-8">
-    <Seo title="Terms &amp; Conditions | ROVE Eyewear" />
-    <h1 className="text-4xl uppercase tracking-[0.3em]">Terms &amp; Conditions</h1>
-    <p className="text-sm text-white/70">
-      Orders are fulfilled within 2-4 business days. Custom lens orders require an additional 5-7 days for lab finishing.
-      Returns are accepted within 30 days if frames are unworn and in original condition. Prescription lenses are
-      non-refundable but may be remade if prescriptions are incorrect.
-    </p>
-    <p className="text-sm text-white/70">
-      By purchasing from ROVE, you agree to our care guidelines and understand that adjustments should be performed by
-      authorized opticians to maintain warranty coverage.
-    </p>
-    <p className="text-sm text-white/70">
-      California law governs these terms. Contact legal@rovewear.shop with any questions.
-    </p>
+const TermsPage = () => (
+  <div className="mx-auto w-full max-w-4xl space-y-10 px-6 py-24">
+    <div className="space-y-4">
+      <p className="text-xs uppercase tracking-[0.4em] text-neutral-400">Terms</p>
+      <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">Transparent policies.</h1>
+      <p className="text-sm text-neutral-500">
+        Outline your purchase terms, warranty information, and return policy here. Pair with an FAQ page or automated email flows to answer customer questions quickly.
+      </p>
+    </div>
+    <section className="space-y-4 rounded-[3rem] border border-neutral-200 bg-white p-10">
+      <h2 className="text-sm font-semibold uppercase tracking-[0.35em] text-neutral-500">Orders & shipping</h2>
+      <p className="text-sm text-neutral-500">
+        Standard fulfilment within 2 business days. Express upgrades available at checkout. International duties handled by the receiving customer unless otherwise noted.
+      </p>
+    </section>
+    <section className="space-y-4 rounded-[3rem] border border-neutral-200 bg-white p-10">
+      <h2 className="text-sm font-semibold uppercase tracking-[0.35em] text-neutral-500">Returns & exchanges</h2>
+      <p className="text-sm text-neutral-500">
+        Returns accepted within 30 days in original condition. Complimentary adjustments and lens replacements available under our craftsmanship warranty.
+      </p>
+    </section>
+    <section className="space-y-4 rounded-[3rem] border border-neutral-200 bg-white p-10">
+      <h2 className="text-sm font-semibold uppercase tracking-[0.35em] text-neutral-500">Contact</h2>
+      <p className="text-sm text-neutral-500">
+        Need localisation? Duplicate this route per region and adjust your Vercel rewrites or middleware to serve the right version. Questions? concierge@rove.com.
+      </p>
+    </section>
   </div>
 );
+
+export default TermsPage;
