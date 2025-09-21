@@ -1,179 +1,46 @@
 [
   {
-    "id": "616",
-    "slug": "aviatior-style-1",
-    "title": "Rove I Horizon Aviators I",
-    "categories": [
-      "Aviators"
-    ],
-    "descriptionHtml": "<strong>Stylish Aviator-style Blue Light Blocking Glasses</strong>\n<ul>\n \t<li>Medium (54\u261016-140)</li>\n \t<li>Spring Hinge</li>\n \t<li>Mixed Metal and TR-90</li>\n \t<li>Anti-scratch Hard Coating</li>\n \t<li>Anti-reflection coating</li>\n</ul>",
-    "summary": "Stylish Aviator-style Blue Light Blocking Glasses\n\n \tMedium (54\u261016-140)\n \tSpring Hinge\n \tMixed Metal and TR-90\n \tAnti-scratch Hard Coating\n \tAnti-reflection coating",
-    "price": 39.99,
-    "currency": "USD",
-    "thumbnail": "https://rovewear.shop/wp-content/uploads/2025/09/1-1.png",
-    "specs": {
-      "lensWidth": 54,
-      "bridgeWidth": 16,
-      "templeLength": 140,
-      "frameWidth": 135,
-      "lensHeight": 44,
-      "weight": 29
-    },
-    "variants": [
-      {
-        "id": null,
-        "color": "Matte Black",
-        "price": 39.99,
-        "image": "https://rovewear.shop/wp-content/uploads/2025/09/1.MB_.ANG_.webp"
-      },
-      {
-        "id": null,
-        "color": "Black Gold",
-        "price": 39.99,
-        "image": "https://rovewear.shop/wp-content/uploads/2025/09/1.BG_.ANG_.webp"
-      },
-      {
-        "id": null,
-        "color": "Translucent White",
-        "price": 34.99,
-        "image": "https://rovewear.shop/wp-content/uploads/2025/09/1.TW_.ANG_.webp"
-      },
-      {
-        "id": null,
-        "color": "Translucent Grey",
-        "price": 34.99,
-        "image": "https://rovewear.shop/wp-content/uploads/2025/09/1.TG_.ANG_.webp"
-      },
-      {
-        "id": null,
-        "color": "Translucent Blue",
-        "price": 34.99,
-        "image": "https://rovewear.shop/wp-content/uploads/2025/09/1.TB_.ANG_.webp"
-      }
-    ],
-    "gallery": [
-      "https://rovewear.shop/wp-content/uploads/2025/09/1-1.png",
-      "https://rovewear.shop/wp-content/uploads/2025/09/1.MB_.ANG_.webp",
-      "https://rovewear.shop/wp-content/uploads/2025/09/1.BG_.ANG_.webp",
-      "https://rovewear.shop/wp-content/uploads/2025/09/1.TW_.ANG_.webp",
-      "https://rovewear.shop/wp-content/uploads/2025/09/1.TG_.ANG_.webp",
-      "https://rovewear.shop/wp-content/uploads/2025/09/1.TB_.ANG_.webp"
-    ]
+    "id": "rove-aviator-black",
+    "name": "ROVE Aviator Black",
+    "price": 245,
+    "category": "Aviators",
+    "image": "/products/aviator.svg",
+    "description": "Titanium aviator silhouette with gradient CR-39 lenses and adjustable nose pads for all-day comfort.",
+    "lensWidth": 55,
+    "bridgeWidth": 14,
+    "templeLength": 145
   },
   {
-    "id": "642",
-    "slug": "square-design-1",
-    "title": "Rove I Vector Browline I",
-    "categories": [
-      "Browline",
-      "Square"
-    ],
-    "descriptionHtml": "<strong>Stylish Square-style Blue Light Blocking Glasses</strong>\n<ul>\n \t<li>Wide (52\u261019-144)</li>\n \t<li>Mixed Metal and TR-90 Frames</li>\n \t<li>More then 2x the blocking rate of normal Blue Light Glasses</li>\n \t<li>Anti-scratch Hard Coating</li>\n \t<li>Anti-reflection coating</li>\n</ul>",
-    "summary": "Stylish Square-style Blue Light Blocking Glasses\n\n \tWide (52\u261019-144)\n \tMixed Metal and TR-90 Frames\n \tMore then 2x the blocking rate of normal Blue Light Glasses\n \tAnti-scratch Hard Coating\n \tAnti-reflection coating",
-    "price": 39.99,
-    "currency": "USD",
-    "thumbnail": "https://rovewear.shop/wp-content/uploads/2025/09/3-1.webp",
-    "specs": {
-      "lensWidth": 52,
-      "bridgeWidth": 19,
-      "templeLength": 144,
-      "frameWidth": 140,
-      "lensHeight": 40,
-      "weight": 33
-    },
-    "variants": [
-      {
-        "id": null,
-        "color": "Black Silver",
-        "price": 39.99,
-        "image": "https://rovewear.shop/wp-content/uploads/2025/09/2.BS_.webp"
-      },
-      {
-        "id": null,
-        "color": "Black Gold",
-        "price": 39.99,
-        "image": "https://rovewear.shop/wp-content/uploads/2025/09/2.BG_.webp"
-      },
-      {
-        "id": null,
-        "color": "Pattern Brown",
-        "price": 34.99,
-        "image": "https://rovewear.shop/wp-content/uploads/2025/09/2.PB_.webp"
-      },
-      {
-        "id": null,
-        "color": "Translucent Grey",
-        "price": 34.99,
-        "image": "https://rovewear.shop/wp-content/uploads/2025/09/2.TGrey_.webp"
-      },
-      {
-        "id": null,
-        "color": "Translucent Green",
-        "price": 34.99,
-        "image": "https://rovewear.shop/wp-content/uploads/2025/09/2.TGreen.webp"
-      }
-    ],
-    "gallery": [
-      "https://rovewear.shop/wp-content/uploads/2025/09/3-1.webp",
-      "https://rovewear.shop/wp-content/uploads/2025/09/2.BS_.webp",
-      "https://rovewear.shop/wp-content/uploads/2025/09/2.BG_.webp",
-      "https://rovewear.shop/wp-content/uploads/2025/09/2.PB_.webp",
-      "https://rovewear.shop/wp-content/uploads/2025/09/2.TGrey_.webp",
-      "https://rovewear.shop/wp-content/uploads/2025/09/2.TGreen.webp"
-    ]
+    "id": "rove-browline-gold",
+    "name": "ROVE Browline Gold",
+    "price": 265,
+    "category": "Browline",
+    "image": "/products/browline.svg",
+    "description": "Hand-polished acetate brow paired with stainless lower rims for a mid-century inspired statement.",
+    "lensWidth": 52,
+    "bridgeWidth": 18,
+    "templeLength": 148
   },
   {
-    "id": "669",
-    "slug": "rove-i-eterna-i",
-    "title": "Rove I Eterna I",
-    "categories": [
-      "Uncategorized"
-    ],
-    "descriptionHtml": "",
-    "summary": "",
-    "price": null,
-    "currency": "USD",
-    "thumbnail": "https://rovewear.shop/wp-content/uploads/2025/09/3.png",
-    "specs": {
-      "lensWidth": null,
-      "bridgeWidth": null,
-      "templeLength": null,
-      "frameWidth": null,
-      "lensHeight": null,
-      "weight": null
-    },
-    "variants": [
-      {
-        "id": null,
-        "color": "Black",
-        "price": null,
-        "image": "https://rovewear.shop/wp-content/uploads/2025/09/1a.jpg"
-      },
-      {
-        "id": null,
-        "color": "Tortoise Shell",
-        "price": null,
-        "image": "https://rovewear.shop/wp-content/uploads/2025/09/1b-1.webp"
-      },
-      {
-        "id": null,
-        "color": "Purple",
-        "price": null,
-        "image": "https://rovewear.shop/wp-content/uploads/2025/09/1c.jpg"
-      },
-      {
-        "id": null,
-        "color": "Blue",
-        "price": null,
-        "image": "https://rovewear.shop/wp-content/uploads/2025/09/1d.webp"
-      }
-    ],
-    "gallery": [
-      "https://rovewear.shop/wp-content/uploads/2025/09/3.png",
-      "https://rovewear.shop/wp-content/uploads/2025/09/1a.jpg",
-      "https://rovewear.shop/wp-content/uploads/2025/09/1b-1.webp",
-      "https://rovewear.shop/wp-content/uploads/2025/09/1c.jpg",
-      "https://rovewear.shop/wp-content/uploads/2025/09/1d.webp"
-    ]
+    "id": "rove-square-matte",
+    "name": "ROVE Square Matte",
+    "price": 225,
+    "category": "Square",
+    "image": "/products/square.svg",
+    "description": "Squared silhouette with sculpted temples and custom titanium core for lightweight durability.",
+    "lensWidth": 50,
+    "bridgeWidth": 20,
+    "templeLength": 147
+  },
+  {
+    "id": "rove-wayfarer-navy",
+    "name": "ROVE Wayfarer Navy",
+    "price": 235,
+    "category": "Square",
+    "image": "/products/wayfarer.svg",
+    "description": "A bolder take on the classic wayfarer with marine acetate and polarized lenses.",
+    "lensWidth": 51,
+    "bridgeWidth": 19,
+    "templeLength": 146
   }
 ]

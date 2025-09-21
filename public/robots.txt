@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://rovewear.shop/sitemap.xml

@@ -1,72 +1,48 @@
-"use client";
+import React from 'react';
+import clsx from 'clsx';
+import { motion, type HTMLMotionProps } from 'framer-motion';
 
-import { forwardRef } from "react";
-import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
-import Link from "next/link";
-import type { LinkProps } from "next/link";
-import clsx from "clsx";
+type ButtonVariant = 'primary' | 'secondary' | 'ghost';
+type ButtonSize = 'sm' | 'md' | 'lg';
 
-type Variant = "primary" | "secondary" | "ghost";
-type Size = "sm" | "md" | "lg";
+const baseStyles = 'inline-flex items-center justify-center rounded-full transition-all font-semibold tracking-wide uppercase';
 
-const variantStyles: Record<Variant, string> = {
-  primary:
-    "bg-white text-black hover:bg-slate-200 focus-visible:outline-white/80 focus-visible:ring-2 focus-visible:ring-white/60",
-  secondary:
-    "border border-white/30 text-white hover:border-white/60 focus-visible:outline-white/80 focus-visible:ring-2 focus-visible:ring-white/40",
-  ghost:
-    "text-white hover:text-slate-200 focus-visible:outline-white/80 focus-visible:ring-2 focus-visible:ring-white/40",
+const variantStyles: Record<ButtonVariant, string> = {
+  primary: 'bg-white text-black hover:bg-brand.light hover:text-brand-accent shadow-lg',
+  secondary: 'bg-brand.accent text-white hover:bg-white/10 border border-white/20',
+  ghost: 'bg-transparent text-white hover:bg-white/10'
 };
 
-const sizeStyles: Record<Size, string> = {
-  sm: "px-4 py-2 text-[11px]",
-  md: "px-6 py-3 text-xs",
-  lg: "px-8 py-4 text-sm",
+const sizeStyles: Record<ButtonSize, string> = {
+  sm: 'px-4 py-2 text-xs',
+  md: 'px-6 py-3 text-sm',
+  lg: 'px-8 py-4 text-sm md:text-base'
 };
 
-const baseStyles =
-  "inline-flex items-center justify-center gap-2 rounded-full font-semibold uppercase tracking-[0.35em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
-
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: Variant;
-  size?: Size;
+export interface ButtonProps extends HTMLMotionProps<'button'> {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  loading?: boolean;
+  children?: React.ReactNode;
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "primary", size = "md", type = "button", ...props }, ref) => (
-    <button
-      {...props}
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, children, variant = 'primary', size = 'md', loading = false, disabled, ...props }, ref) => (
+    <motion.button
       ref={ref}
-      type={type}
-      className={clsx(baseStyles, sizeStyles[size], variantStyles[variant], className)}
-    />
-  ),
+      whileTap={{ scale: 0.97 }}
+      className={clsx(baseStyles, variantStyles[variant], sizeStyles[size], className, {
+        'cursor-not-allowed opacity-70': disabled || loading
+      })}
+      disabled={disabled || loading}
+      {...props}
+    >
+      {loading && (
+        <span className="mr-2 inline-block h-3 w-3 animate-spin rounded-full border-2 border-white border-t-transparent" />
+      )}
+      {children}
+    </motion.button>
+  )
 );
 
-Button.displayName = "Button";
-
-export interface ButtonLinkProps
-  extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href">,
-    LinkProps {
-  variant?: Variant;
-  size?: Size;
-}
-
-export function ButtonLink({
-  href,
-  className,
-  variant = "primary",
-  size = "md",
-  children,
-  ...props
-}: ButtonLinkProps) {
-  return (
-    <Link
-      {...props}
-      href={href}
-      className={clsx(baseStyles, sizeStyles[size], variantStyles[variant], className)}
-    >
-      {children}
-    </Link>
-  );
-}
+Button.displayName = 'Button';

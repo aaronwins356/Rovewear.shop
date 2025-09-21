@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0a0a" />
+      <stop offset="100%" stop-color="#1f2937" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#g1)" />
+  <circle cx="260" cy="300" r="150" stroke="#fef08a" stroke-width="14" fill="none" />
+  <circle cx="540" cy="300" r="150" stroke="#fef08a" stroke-width="14" fill="none" />
+  <rect x="255" y="286" width="290" height="28" fill="#fef08a" />
+  <text x="400" y="520" fill="#f9fafb" font-family="'Helvetica Neue', Arial" font-size="42" text-anchor="middle">ROVE Aviator</text>
+</svg>

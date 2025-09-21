@@ -1,81 +1,91 @@
-# Rovewear Shop – Local Development Guide
+# ROVEwear Shop – React + Tailwind storefront
 
-This project is a Next.js 14 storefront styled with Tailwind CSS. Follow the steps below to clone the repository, configure the required environment variables, and run the site locally for development or QA.
+This repository contains the ROVE eyewear storefront built with Create React App (TypeScript), Tailwind CSS, and a lightweight custom router tailored for Vercel deployments. The project ships with a fully mocked product catalog, cart management via React Context, cinematic motion via Framer Motion, and a deploy-ready Stripe Checkout integration (test mode).
 
 ## Prerequisites
 
-- **Node.js 18.17+ or 20.x** (matching the Next.js 14 LTS support matrix)
-- **npm 9+** (bundled with the recommended Node.js versions)
-- **Git** for cloning the repository
+- **Node.js 18+**
+- **npm 9+**
+- **Git**
 
-> If you use a version manager (e.g., `nvm`), set the desired Node.js version before installing dependencies.
+If you use a Node version manager such as `nvm`, set the correct Node.js version before installing dependencies.
 
 ## Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/<your-org>/Rovewear.shop.git
-   cd Rovewear.shop
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-## Configure Environment Variables
-
-Create a `.env.local` file in the project root. Next.js automatically loads this file in development.
-
 ```bash
-cp .env.example .env.local # if an example file is provided
+git clone https://github.com/<your-org>/Rovewear.shop.git
+cd Rovewear.shop
+npm install
 ```
 
-Ensure the following variables are defined:
+> If your environment restricts access to the public npm registry, mirror packages locally or configure an internal proxy before running `npm install`.
+
+## Environment Variables
+
+Create a `.env` file in the project root (CRA automatically loads it) and populate the following variables. Never commit real secrets to version control.
 
 | Variable | Description |
 | --- | --- |
-| `STRIPE_SECRET_KEY` | Required for API routes that create Stripe checkout sessions. |
-| `STRIPE_SUCCESS_URL` | Optional. Overrides the default post-checkout success URL. |
-| `STRIPE_CANCEL_URL` | Optional. Overrides the default checkout cancel URL. |
+| `REACT_APP_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key used in the browser when redirecting to Checkout. |
+| `STRIPE_SECRET_KEY` | Secret key consumed by the Vercel API function to create Checkout Sessions. |
+| `CLIENT_URL` | Optional. Overrides the base URL used for Stripe success/cancel redirects (defaults to `http://localhost:3000`). |
 
-Never commit real secrets to version control. In production (e.g., Vercel), configure the same variables in the hosting provider’s dashboard.
+On Vercel, configure the same variables through the dashboard.
 
-## Running the Development Server
-
-Start the local dev server with hot reloading:
-
-```bash
-npm run dev
-```
-
-Then open [`http://localhost:3000`](http://localhost:3000) in your browser. Next.js will rebuild pages automatically as you edit files in `src/`.
-
-## Additional Scripts
+## Available Scripts
 
 | Command | Purpose |
 | --- | --- |
-| `npm run lint` | Runs ESLint with the `next/core-web-vitals` ruleset. |
+| `npm start` | Starts the local development server on [http://localhost:3000](http://localhost:3000) with hot reloading. |
+| `npm run build` | Produces a production build inside the `build/` directory. |
+| `npm test` | Runs the default Create React App test runner (Jest) in watch mode. |
+| `npm run lint` | Runs ESLint on all TypeScript source files. |
 | `npm run typecheck` | Executes `tsc --noEmit` to validate TypeScript types. |
-| `npm run build` | Creates an optimized production build. Runs the same checks required by CI. |
-| `npm run start` | Serves the production build locally (run `npm run build` first). |
 
-Running all quality gates before opening a pull request is recommended:
+Run all quality checks before opening a pull request:
 
 ```bash
 npm run lint && npm run typecheck && npm run build
 ```
 
-## Project Structure Highlights
+## Project Structure
 
-- `src/app` – App Router entry points, layouts, and pages.
-- `src/components` – Reusable UI components.
-- `src/lib` – Shared utilities (e.g., API clients, helpers).
-- `src/app/api` – Route handlers for server-side functionality (Stripe checkout, etc.).
+```
+Rovewear.shop/
+├── api/                         # Vercel serverless functions (Stripe Checkout session)
+├── public/                      # Static assets and placeholder product imagery
+├── src/
+│   ├── components/              # Reusable UI components (Hero, NavBar, ProductCard, etc.)
+│   ├── context/                 # Cart context and providers
+│   ├── data/                    # Placeholder product catalog (JSON)
+│   ├── pages/                   # Page-level React components mapped by the router
+│   ├── router/                  # Custom SPA router powering in-app navigation
+│   ├── utils/                   # Formatting helpers and Stripe loader
+│   └── index.tsx                # Application bootstrap
+├── tailwind.config.js           # Tailwind CSS configuration
+└── tsconfig.json                # TypeScript compiler settings
+```
+
+## Stripe Test Mode
+
+- Use the test publishable/secret keys from your Stripe dashboard.
+- Default success URL: `http://localhost:3000/success`
+- Default cancel URL: `http://localhost:3000/cancel`
+- Test cards: `4242 4242 4242 4242` with any future expiry and CVC.
+
+## Deployment
+
+1. Push to GitHub.
+2. Create a Vercel project pointing to this repository.
+3. Configure the environment variables described above.
+4. Deploy the `main` branch. The build command is `npm run build`, and the output directory is `build/`.
+
+After deployment, connect the `rovewear.shop` domain inside Vercel’s dashboard.
 
 ## Troubleshooting
 
-- **Port already in use**: stop the process occupying port 3000 or set `PORT=3001 npm run dev` to use another port.
-- **Dependency issues**: delete `node_modules` and `package-lock.json`, then reinstall (`npm install`).
-- **Environment variables not loading**: ensure `.env.local` exists and restart the dev server after changes.
+- **Dependency install errors**: configure npm to use an accessible registry or install packages from a private mirror.
+- **Tailwind styles missing**: ensure `postcss.config.js` and `tailwind.config.js` are present and `src/index.css` imports the Tailwind directives.
+- **Stripe redirect issues**: verify both publishable and secret keys are present and that the domain matches the `CLIENT_URL` env variable.
 
-For additional documentation or questions, create an issue or contact the Rovewear engineering team.
+For additional questions, open an issue or contact the Rovewear engineering team.
