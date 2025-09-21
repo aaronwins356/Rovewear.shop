@@ -1,10 +1,14 @@
+import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import wordmark from '../assets/rove-wordmark.svg';
 import { useCart } from '../context/CartContext';
+import Button from './Button';
+import ButtonLink from './ButtonLink';
 
-type NavBarProps = {
+interface NavBarProps {
   onCartToggle: () => void;
-};
+}
 
 const navLinks = [
   { label: 'Home', to: '/' },
@@ -24,12 +28,17 @@ const NavBar = ({ onCartToggle }: NavBarProps) => {
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/90 backdrop-blur">
+    <motion.header
+      className="sticky top-0 z-40 border-b border-neutral-200/60 bg-white/80 backdrop-blur"
+      initial={{ opacity: 0, y: -32 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
-        <Link to="/" className="text-xl font-semibold tracking-tight" onClick={handleNavigate}>
-          ROVE
+        <Link to="/" className="flex items-center gap-3" onClick={handleNavigate}>
+          <img src={wordmark} alt="ROVE" className="h-5 w-auto" />
         </Link>
-        <nav className="hidden gap-8 text-sm font-medium uppercase tracking-[0.2em] text-neutral-500 lg:flex">
+        <nav className="hidden gap-8 text-xs font-semibold uppercase tracking-[0.25em] text-neutral-500 lg:flex">
           {navLinks.map((link) => (
             <NavLink
               key={link.to}
@@ -37,7 +46,7 @@ const NavBar = ({ onCartToggle }: NavBarProps) => {
               onClick={handleNavigate}
               className={({ isActive }) =>
                 `transition-colors ${
-                  isActive || location.pathname.startsWith(link.to)
+                  isActive || (link.to !== '/' && location.pathname.startsWith(link.to))
                     ? 'text-neutral-900'
                     : 'hover:text-neutral-800'
                 }`
@@ -48,26 +57,17 @@ const NavBar = ({ onCartToggle }: NavBarProps) => {
           ))}
         </nav>
         <div className="flex items-center gap-4">
-          <Link
-            to="/products"
-            className="hidden rounded-full border border-neutral-900 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] transition-colors hover:bg-neutral-900 hover:text-white lg:inline-flex"
-            onClick={handleNavigate}
-          >
+          <ButtonLink to="/products" onClick={handleNavigate} variant="ghost" size="md" className="hidden lg:inline-flex">
             Explore
-          </Link>
-          <button
-            type="button"
-            onClick={onCartToggle}
-            className="relative rounded-full border border-neutral-900 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] transition-colors hover:bg-neutral-900 hover:text-white"
-            aria-label="Toggle cart"
-          >
+          </ButtonLink>
+          <Button onClick={onCartToggle} variant="outline" size="md" className="relative">
             Cart
             {itemCount > 0 && (
               <span className="absolute -right-2 -top-2 inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-neutral-900 px-2 text-xs font-semibold text-white">
                 {itemCount}
               </span>
             )}
-          </button>
+          </Button>
           <button
             type="button"
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 lg:hidden"
@@ -80,8 +80,13 @@ const NavBar = ({ onCartToggle }: NavBarProps) => {
         </div>
       </div>
       {isMenuOpen && (
-        <div className="border-t border-neutral-200 bg-white px-6 py-4 lg:hidden">
-          <nav className="flex flex-col gap-4 text-sm font-semibold uppercase tracking-[0.2em] text-neutral-600">
+        <motion.div
+          className="border-t border-neutral-200 bg-white px-6 py-4 lg:hidden"
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: 'auto', opacity: 1 }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+        >
+          <nav className="flex flex-col gap-4 text-xs font-semibold uppercase tracking-[0.25em] text-neutral-600">
             {navLinks.map((link) => (
               <NavLink key={link.to} to={link.to} onClick={handleNavigate}>
                 {link.label}
@@ -94,9 +99,9 @@ const NavBar = ({ onCartToggle }: NavBarProps) => {
               Terms
             </Link>
           </nav>
-        </div>
+        </motion.div>
       )}
-    </header>
+    </motion.header>
   );
 };
 

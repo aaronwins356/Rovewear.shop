@@ -1,11 +1,13 @@
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import Hero from '../components/Hero';
 import ProductCard from '../components/ProductCard';
 import productsData from '../data/products.json';
 import { Product } from '../types/product';
 
-type HomePageProps = {
+interface HomePageProps {
   onOpenCart: () => void;
-};
+}
 
 const products = productsData as Product[];
 
@@ -14,56 +16,72 @@ const HomePage = ({ onOpenCart }: HomePageProps) => {
 
   return (
     <div className="space-y-20 pb-24">
-      <section className="relative overflow-hidden bg-white">
-        <div className="mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 px-6 py-24 md:grid-cols-2">
-          <div className="space-y-6">
-            <p className="text-xs uppercase tracking-[0.4em] text-neutral-400">Rove eyewear</p>
-            <h1 className="text-4xl font-semibold tracking-tight text-neutral-900 md:text-5xl">
-              Luxury eyewear engineered for luminous moments.
-            </h1>
-            <p className="text-base text-neutral-500">
-              Discover ultra-light titanium frames, handcrafted acetates, and future-forward lenses. Designed in
-              California. Worn everywhere.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link
-                to="/products"
-                className="rounded-full bg-neutral-900 px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-white transition hover:bg-neutral-700"
-              >
-                Shop collection
-              </Link>
-              <button
-                type="button"
-                onClick={onOpenCart}
-                className="rounded-full border border-neutral-900 px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-neutral-900 transition hover:bg-neutral-900 hover:text-white"
-              >
-                View cart
-              </button>
-            </div>
-          </div>
-          <div className="relative flex justify-center">
-            <div className="h-72 w-72 rounded-full bg-neutral-100 blur-3xl" aria-hidden="true" />
-            <img
-              src="/products/aviator.svg"
-              alt="ROVE Aurora Aviator"
-              className="absolute inset-0 m-auto w-full max-w-sm object-contain"
-            />
-          </div>
-        </div>
-      </section>
+      <Hero onOpenCart={onOpenCart} />
       <section className="mx-auto w-full max-w-6xl px-6">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.4em] text-neutral-400">Featured</p>
             <h2 className="mt-2 text-2xl font-semibold tracking-tight text-neutral-900">Curated picks for now</h2>
           </div>
-          <Link to="/products" className="text-sm uppercase tracking-[0.3em] text-neutral-500 hover:text-neutral-900">
-            View all
-          </Link>
+          <motion.div
+            className="hidden md:block"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1, ease: 'easeOut' }}
+          >
+            <Link
+              to="/products"
+              className="text-xs uppercase tracking-[0.35em] text-neutral-500 transition hover:text-neutral-900"
+            >
+              View all
+            </Link>
+          </motion.div>
         </div>
-        <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.08,
+              },
+            },
+          }}
+        >
           {featured.map((product) => (
-            <ProductCard key={product.id} product={product} showDescription onAdd={onOpenCart} />
+            <motion.div
+              key={product.id}
+              variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.45, ease: 'easeOut' }}
+            >
+              <ProductCard product={product} showDescription onAdd={onOpenCart} />
+            </motion.div>
+          ))}
+        </motion.div>
+      </section>
+      <section className="mx-auto w-full max-w-6xl px-6">
+        <div className="grid gap-10 rounded-[3rem] border border-neutral-200 bg-white p-10 md:grid-cols-3">
+          {[
+            {
+              title: 'Featherweight comfort',
+              copy: 'Titanium alloys and sculpted acetate temples create an effortless, balanced fit for all-day wear.',
+            },
+            {
+              title: 'Ocean-ready optics',
+              copy: 'Polarised UV400 lenses with hydrophobic coatings keep horizons crisp through glare and spray.',
+            },
+            {
+              title: 'Atelier craftsmanship',
+              copy: 'Each frame is hand-assembled, polished, and inspected in our Los Angeles studio for lasting precision.',
+            },
+          ].map((feature) => (
+            <div key={feature.title} className="space-y-3">
+              <h3 className="text-sm font-semibold uppercase tracking-[0.35em] text-neutral-500">{feature.title}</h3>
+              <p className="text-sm text-neutral-500">{feature.copy}</p>
+            </div>
           ))}
         </div>
       </section>

@@ -25,7 +25,7 @@ const App = () => {
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<HomePage onOpenCart={() => setIsCartOpen(true)} />} />
-            <Route path="/products" element={<ProductsPage />} />
+            <Route path="/products" element={<ProductsPage onOpenCart={() => setIsCartOpen(true)} />} />
             <Route path="/products/:id" element={<ProductDetailPage onOpenCart={() => setIsCartOpen(true)} />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />

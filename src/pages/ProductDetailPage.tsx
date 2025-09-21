@@ -1,6 +1,10 @@
+import { motion } from 'framer-motion';
 import { useMemo } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import Button from '../components/Button';
+import ButtonLink from '../components/ButtonLink';
 import ProductCard from '../components/ProductCard';
+import ProductGallery from '../components/ProductGallery';
 import { useCart } from '../context/CartContext';
 import productsData from '../data/products.json';
 import { Product } from '../types/product';
@@ -23,13 +27,9 @@ const ProductDetailPage = ({ onOpenCart }: ProductDetailPageProps) => {
       <div className="mx-auto w-full max-w-4xl px-6 py-24">
         <p className="text-lg font-semibold text-neutral-900">Frame not found.</p>
         <p className="mt-2 text-sm text-neutral-500">The model you are looking for may be archived or sold out.</p>
-        <button
-          type="button"
-          onClick={() => navigate(-1)}
-          className="mt-6 rounded-full border border-neutral-900 px-5 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-neutral-900"
-        >
+        <Button onClick={() => navigate(-1)} variant="outline" className="mt-6">
           Go back
-        </button>
+        </Button>
       </div>
     );
   }
@@ -44,11 +44,21 @@ const ProductDetailPage = ({ onOpenCart }: ProductDetailPageProps) => {
   return (
     <div className="space-y-20 pb-24">
       <section className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-16 px-6 py-24 lg:grid-cols-[1.2fr_1fr]">
-        <div className="space-y-6">
-          <div className="relative overflow-hidden rounded-3xl border border-neutral-200 bg-white p-10 shadow-sm">
-            <img src={product.image} alt={product.name} className="mx-auto w-full max-w-md object-contain" />
-          </div>
-          <div className="flex flex-wrap gap-3 text-xs uppercase tracking-[0.3em] text-neutral-400">
+        <ProductGallery name={product.name} images={product.gallery ?? [{ src: product.image }]} />
+        <motion.div
+          className="space-y-6"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        >
+          <Link to="/products" className="text-xs uppercase tracking-[0.3em] text-neutral-400 transition hover:text-neutral-900">
+            Back to collection
+          </Link>
+          <p className="text-xs uppercase tracking-[0.4em] text-neutral-400">{product.category}</p>
+          <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">{product.name}</h1>
+          <p className="text-lg font-semibold text-neutral-900">${product.price.toFixed(0)}</p>
+          <p className="text-sm leading-relaxed text-neutral-500">{product.description}</p>
+          <div className="flex flex-wrap gap-4 text-xs uppercase tracking-[0.3em] text-neutral-500">
             {product.colors?.map((color) => (
               <span key={color} className="rounded-full border border-neutral-200 px-4 py-2">
                 {color}
@@ -60,37 +70,20 @@ const ProductDetailPage = ({ onOpenCart }: ProductDetailPageProps) => {
               </span>
             ))}
           </div>
-        </div>
-        <div className="space-y-6">
-          <Link to="/products" className="text-xs uppercase tracking-[0.3em] text-neutral-400 hover:text-neutral-900">
-            Back to collection
-          </Link>
-          <p className="text-xs uppercase tracking-[0.4em] text-neutral-400">{product.category}</p>
-          <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">{product.name}</h1>
-          <p className="text-lg font-semibold text-neutral-900">${product.price.toFixed(0)}</p>
-          <p className="text-sm leading-relaxed text-neutral-500">{product.description}</p>
-          <div className="flex gap-4">
-            <button
-              type="button"
-              onClick={handleAddToCart}
-              className="rounded-full bg-neutral-900 px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-white transition hover:bg-neutral-700"
-            >
+          <div className="flex flex-wrap gap-4">
+            <Button onClick={handleAddToCart} size="lg">
               Add to cart
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/cart')}
-              className="rounded-full border border-neutral-900 px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-neutral-900 transition hover:bg-neutral-900 hover:text-white"
-            >
+            </Button>
+            <ButtonLink to="/cart" variant="outline" size="lg">
               View cart
-            </button>
+            </ButtonLink>
           </div>
           <ul className="space-y-2 text-sm text-neutral-500">
             <li>• Ultra-clear, anti-reflective optics</li>
             <li>• Polarised UV400 protection</li>
             <li>• Lifetime in-studio adjustments</li>
           </ul>
-        </div>
+        </motion.div>
       </section>
       <section className="mx-auto w-full max-w-6xl px-6">
         <h2 className="text-2xl font-semibold tracking-tight text-neutral-900">You may also like</h2>

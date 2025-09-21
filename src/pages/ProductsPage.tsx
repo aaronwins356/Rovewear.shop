@@ -1,13 +1,20 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import productsData from '../data/products.json';
 import { Product } from '../types/product';
 
+interface ProductsPageProps {
+  onOpenCart?: () => void;
+}
+
 const products = productsData as Product[];
 
-const ProductsPage = () => {
-  const [query, setQuery] = useState('');
-  const [category, setCategory] = useState('All');
+const ProductsPage = ({ onOpenCart }: ProductsPageProps) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const query = searchParams.get('q') ?? '';
+  const category = searchParams.get('category') ?? 'All';
 
   const categories = useMemo(() => ['All', ...new Set(products.map((product) => product.category))], []);
 
@@ -18,6 +25,26 @@ const ProductsPage = () => {
       return matchesCategory && matchesQuery;
     });
   }, [category, query]);
+
+  const handleFilterChange = (nextCategory: string) => {
+    const next = new URLSearchParams(searchParams);
+    if (nextCategory === 'All') {
+      next.delete('category');
+    } else {
+      next.set('category', nextCategory);
+    }
+    setSearchParams(next, { replace: true });
+  };
+
+  const handleQueryChange = (value: string) => {
+    const next = new URLSearchParams(searchParams);
+    if (value.trim()) {
+      next.set('q', value);
+    } else {
+      next.delete('q');
+    }
+    setSearchParams(next, { replace: true }); // Persist the search term to the URL so refreshes and sharing keep context.
+  };
 
   return (
     <div className="mx-auto w-full max-w-6xl px-6 pb-24">
@@ -33,7 +60,7 @@ const ProductsPage = () => {
               <button
                 key={item}
                 type="button"
-                onClick={() => setCategory(item)}
+                onClick={() => handleFilterChange(item)}
                 className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] transition ${
                   category === item
                     ? 'border-neutral-900 bg-neutral-900 text-white'
@@ -51,7 +78,7 @@ const ProductsPage = () => {
             <input
               id="product-search"
               value={query}
-              onChange={(event) => setQuery(event.target.value)}
+              onChange={(event) => handleQueryChange(event.target.value)}
               placeholder="Search the collection"
               className="w-full rounded-full border border-neutral-200 px-5 py-3 text-sm outline-none transition focus:border-neutral-900"
               type="search"
@@ -61,13 +88,11 @@ const ProductsPage = () => {
       </header>
       <section>
         {filteredProducts.length === 0 ? (
-          <p className="py-12 text-sm text-neutral-500">
-            No frames found — try a different silhouette or search term.
-          </p>
+          <p className="py-12 text-sm text-neutral-500">No frames found — try a different silhouette or search term.</p>
         ) : (
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} showDescription />
+              <ProductCard key={product.id} product={product} showDescription onAdd={onOpenCart} />
             ))}
           </div>
         )}

@@ -1,9 +1,9 @@
-import { Link, useNavigate } from 'react-router-dom';
+import Button from '../components/Button';
+import ButtonLink from '../components/ButtonLink';
 import { useCart } from '../context/CartContext';
 
 const CartPage = () => {
   const { items, total, updateQuantity, removeItem, clearCart } = useCart();
-  const navigate = useNavigate();
 
   return (
     <div className="mx-auto w-full max-w-4xl px-6 py-24">
@@ -18,9 +18,9 @@ const CartPage = () => {
         {items.length === 0 ? (
           <div className="rounded-3xl border border-neutral-200 bg-white p-12 text-center text-sm text-neutral-500">
             <p>The cart is empty.</p>
-            <Link to="/products" className="mt-4 inline-block text-xs uppercase tracking-[0.3em] text-neutral-900">
+            <ButtonLink to="/products" variant="ghost" className="mt-4 justify-center px-0">
               View the collection
-            </Link>
+            </ButtonLink>
           </div>
         ) : (
           <div className="space-y-6">
@@ -41,21 +41,25 @@ const CartPage = () => {
                     <p className="text-sm text-neutral-500">{product.description}</p>
                     <div className="mt-auto flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                       <div className="flex items-center gap-2">
-                        <button
+                        <Button
                           type="button"
+                          size="sm"
+                          variant="ghost"
                           className="h-10 w-10 rounded-full border border-neutral-200 text-lg"
                           onClick={() => updateQuantity(product.id, quantity - 1)}
                         >
                           −
-                        </button>
+                        </Button>
                         <span className="w-8 text-center text-sm font-medium">{quantity}</span>
-                        <button
+                        <Button
                           type="button"
+                          size="sm"
+                          variant="ghost"
                           className="h-10 w-10 rounded-full border border-neutral-200 text-lg"
                           onClick={() => updateQuantity(product.id, quantity + 1)}
                         >
                           +
-                        </button>
+                        </Button>
                       </div>
                       <button
                         type="button"
@@ -76,20 +80,17 @@ const CartPage = () => {
               </div>
               <p className="mt-2 text-xs text-neutral-500">Shipping and taxes calculated at checkout.</p>
               <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:gap-4">
-                <button
-                  type="button"
-                  onClick={() => navigate('/checkout')}
-                  className="flex-1 rounded-full bg-neutral-900 px-5 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-white transition hover:bg-neutral-700"
-                >
+                <ButtonLink to="/checkout" className="flex-1 text-center">
                   Proceed to checkout
-                </button>
-                <button
+                </ButtonLink>
+                <Button
                   type="button"
                   onClick={clearCart}
-                  className="flex-1 rounded-full border border-neutral-200 px-5 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500 transition hover:text-neutral-900"
+                  variant="ghost"
+                  className="flex-1"
                 >
                   Clear cart
-                </button>
+                </Button>
               </div>
             </div>
           </div>

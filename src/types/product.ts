@@ -1,3 +1,9 @@
+export interface ProductImage {
+  src: string;
+  alt?: string;
+  background?: string;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -7,4 +13,5 @@ export interface Product {
   description: string;
   colors?: string[];
   sizes?: string[];
+  gallery?: ProductImage[];
 }

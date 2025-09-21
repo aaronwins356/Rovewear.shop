@@ -1,24 +1,40 @@
-import { Link } from 'react-router-dom';
+import ButtonLink from '../components/ButtonLink';
 
 const CheckoutPage = () => (
-  <div className="mx-auto w-full max-w-3xl px-6 py-24">
-    <p className="text-xs uppercase tracking-[0.4em] text-neutral-400">Checkout</p>
-    <h1 className="mt-4 text-3xl font-semibold tracking-tight text-neutral-900">Secure checkout coming soon.</h1>
-    <p className="mt-4 text-sm text-neutral-500">
-      This template is wired for Stripe or your preferred payment provider. Connect credentials in Vercel when you are ready
-      to launch.
-    </p>
-    <div className="mt-8 space-y-3 text-sm text-neutral-500">
-      <p>• Cart contents persist locally so customers can return without losing their selections.</p>
-      <p>• Configure webhook endpoints on Vercel to enable order confirmations.</p>
-      <p>• Update environment variables (e.g. STRIPE_SECRET_KEY) without hardcoding secrets.</p>
+  <div className="mx-auto w-full max-w-4xl space-y-10 px-6 py-24">
+    <div className="space-y-4">
+      <p className="text-xs uppercase tracking-[0.4em] text-neutral-400">Checkout</p>
+      <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">Secure checkout coming soon.</h1>
+      <p className="text-sm text-neutral-500">
+        This template is wired for Stripe or your preferred payment provider. Connect credentials in Vercel when you are ready to launch.
+      </p>
     </div>
-    <Link
-      to="/products"
-      className="mt-10 inline-flex rounded-full border border-neutral-900 px-5 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-neutral-900 transition hover:bg-neutral-900 hover:text-white"
-    >
-      Return to collection
-    </Link>
+    <section className="grid gap-8 rounded-[3rem] border border-neutral-200 bg-white p-10 md:grid-cols-2">
+      <div className="space-y-3 text-sm text-neutral-500">
+        <h2 className="text-sm font-semibold uppercase tracking-[0.35em] text-neutral-500">Implementation checklist</h2>
+        <ul className="space-y-2">
+          <li>• Configure Stripe secret/public keys via Vercel environment variables.</li>
+          <li>• Add webhook endpoint for order confirmations and fulfilment.</li>
+          <li>• Swap in your CMS or ERP to sync live inventory.</li>
+        </ul>
+      </div>
+      <div className="space-y-3 text-sm text-neutral-500">
+        <h2 className="text-sm font-semibold uppercase tracking-[0.35em] text-neutral-500">Customer assurance</h2>
+        <ul className="space-y-2">
+          <li>• Cart contents persist locally so shoppers can return without losing selections.</li>
+          <li>• Taxes and shipping rules plug into your payment provider.</li>
+          <li>• PCI compliance handled via hosted checkout.</li>
+        </ul>
+      </div>
+    </section>
+    <div className="rounded-[3rem] border border-neutral-200 bg-neutral-50 p-10 text-sm text-neutral-500">
+      <p>
+        Ready to integrate? Replace the placeholder checkout handler with your payment intent call and surface the success/cancel routes as return URLs.
+      </p>
+      <ButtonLink to="/success" className="mt-6 inline-flex">
+        Preview success flow
+      </ButtonLink>
+    </div>
   </div>
 );
 
