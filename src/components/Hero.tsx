@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { ButtonLink } from "./Button";
 
 export function Hero() {
   return (
@@ -41,18 +41,12 @@ export function Hero() {
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
           className="flex flex-wrap items-center gap-4"
         >
-          <Link
-            href="#catalog"
-            className="rounded-full bg-white px-10 py-4 text-xs font-semibold uppercase tracking-[0.4em] text-black transition hover:bg-slate-200"
-          >
+          <ButtonLink href="#catalog" size="lg">
             Shop Now
-          </Link>
-          <Link
-            href="/products/aviatior-style-1"
-            className="rounded-full border border-white/30 px-8 py-4 text-xs font-semibold uppercase tracking-[0.4em] text-white transition hover:border-white/60"
-          >
+          </ButtonLink>
+          <ButtonLink href="/products/aviatior-style-1" variant="secondary" size="lg">
             View Collection
-          </Link>
+          </ButtonLink>
         </motion.div>
       </div>
     </section>

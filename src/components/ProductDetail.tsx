@@ -6,6 +6,7 @@ import type { Product } from "@/lib/types";
 import { ProductGallery } from "./ProductGallery";
 import { SizeGuideModal } from "./SizeGuideModal";
 import { useCart } from "./CartProvider";
+import { Button } from "./Button";
 
 interface ProductDetailProps {
   product: Product;
@@ -96,13 +97,9 @@ export function ProductDetail({ product }: ProductDetailProps) {
             <span className="text-sm uppercase tracking-[0.3em] text-slate-400">Investment</span>
             <span className="text-2xl font-semibold text-white">${price?.toFixed(2) ?? "N/A"}</span>
           </div>
-          <button
-            type="button"
-            className="rounded-full bg-white px-8 py-4 text-xs font-semibold uppercase tracking-[0.35em] text-black transition hover:bg-slate-200"
-            onClick={() => addItem(product.id, activeVariant?.color)}
-          >
+          <Button type="button" size="lg" onClick={() => addItem(product.id, activeVariant?.color)}>
             Add to Cart
-          </button>
+          </Button>
           <p className="text-xs text-slate-400">
             Secure Stripe checkout. Anti-glare hard-coat, blue-light filter, and protective case included.
           </p>
