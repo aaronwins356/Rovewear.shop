@@ -1,106 +1,165 @@
-import React, { createContext, useCallback, useMemo, useState } from 'react';
-import type { CartLineItem, Product } from '../types/product';
+import {
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+} from 'react';
+import { Product } from '../types/product';
 
-interface CartContextValue {
-  items: CartLineItem[];
-  subtotal: number;
+const CART_STORAGE_KEY = 'rove-shop-cart';
+
+type CartAction =
+  | { type: 'ADD_ITEM'; payload: { product: Product; quantity: number } }
+  | { type: 'REMOVE_ITEM'; payload: { productId: string } }
+  | { type: 'UPDATE_QUANTITY'; payload: { productId: string; quantity: number } }
+  | { type: 'RESET' };
+
+export interface CartItem {
+  product: Product;
+  quantity: number;
+}
+
+interface CartState {
+  items: CartItem[];
+}
+
+export interface CartContextValue {
+  items: CartItem[];
+  total: number;
   addItem: (product: Product, quantity?: number) => void;
   removeItem: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
-  clear: () => void;
-  isDrawerOpen: boolean;
-  openDrawer: () => void;
-  closeDrawer: () => void;
-  toggleDrawer: () => void;
+  clearCart: () => void;
 }
 
-export const CartContext = createContext<CartContextValue | undefined>(undefined);
+const CartContext = createContext<CartContextValue | undefined>(undefined);
 
-interface CartProviderProps {
-  children: React.ReactNode;
-}
+const cartReducer = (state: CartState, action: CartAction): CartState => {
+  switch (action.type) {
+    case 'ADD_ITEM': {
+      const { product, quantity } = action.payload;
+      const existingItem = state.items.find((item) => item.product.id === product.id);
 
-const clampQuantity = (value: number): number => {
-  if (Number.isNaN(value) || value < 1) {
-    return 1;
+      if (existingItem) {
+        return {
+          items: state.items.map((item) =>
+            item.product.id === product.id
+              ? { ...item, quantity: item.quantity + quantity }
+              : item,
+          ),
+        };
+      }
+
+      return { items: [...state.items, { product, quantity }] };
+    }
+    case 'REMOVE_ITEM': {
+      return {
+        items: state.items.filter((item) => item.product.id !== action.payload.productId),
+      };
+    }
+    case 'UPDATE_QUANTITY': {
+      const { productId, quantity } = action.payload;
+      if (quantity <= 0) {
+        return {
+          items: state.items.filter((item) => item.product.id !== productId),
+        };
+      }
+
+      return {
+        items: state.items.map((item) =>
+          item.product.id === productId ? { ...item, quantity } : item,
+        ),
+      };
+    }
+    case 'RESET':
+      return { items: [] };
+    default:
+      return state;
   }
-  if (value > 9) {
-    return 9;
-  }
-  return Math.floor(value);
 };
 
-export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
-  const [items, setItems] = useState<CartLineItem[]>([]);
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+const deserializeCart = (): CartState => {
+  if (typeof window === 'undefined') {
+    return { items: [] };
+  }
 
-  const addItem = useCallback((product: Product, quantity = 1) => {
-    setItems((prev) => {
-      const nextQuantity = clampQuantity(quantity);
-      const existing = prev.find((line) => line.product.id === product.id);
-      if (existing) {
-        return prev.map((line) =>
-          line.product.id === product.id
-            ? { ...line, quantity: clampQuantity(line.quantity + nextQuantity) }
-            : line
-        );
-      }
-      return [...prev, { product, quantity: nextQuantity }];
-    });
-    setIsDrawerOpen(true);
-  }, []);
+  try {
+    const stored = window.localStorage.getItem(CART_STORAGE_KEY);
+    if (!stored) {
+      return { items: [] };
+    }
+    const parsed = JSON.parse(stored) as CartState;
+    if (!Array.isArray(parsed.items)) {
+      return { items: [] };
+    }
+    return {
+      items: parsed.items
+        .filter((item): item is CartItem => Boolean(item?.product?.id))
+        .map((item) => ({
+          product: item.product,
+          quantity: Number.isFinite(item.quantity) ? item.quantity : 1,
+        })),
+    };
+  } catch (error) {
+    console.error('Failed to read cart from storage', error);
+    return { items: [] };
+  }
+};
 
-  const removeItem = useCallback((productId: string) => {
-    setItems((prev) => prev.filter((line) => line.product.id !== productId));
-  }, []);
+export const CartProvider = ({ children }: PropsWithChildren) => {
+  const [state, dispatch] = useReducer(cartReducer, undefined, deserializeCart);
 
-  const updateQuantity = useCallback((productId: string, quantity: number) => {
-    setItems((prev) => {
-      if (quantity <= 0) {
-        return prev.filter((line) => line.product.id !== productId);
-      }
-      return prev.map((line) =>
-        line.product.id === productId ? { ...line, quantity: clampQuantity(quantity) } : line
-      );
-    });
-  }, []);
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
 
-  const clear = useCallback(() => {
-    setItems([]);
-  }, []);
+    window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(state));
+  }, [state]);
 
-  const openDrawer = useCallback(() => setIsDrawerOpen(true), []);
-  const closeDrawer = useCallback(() => setIsDrawerOpen(false), []);
-  const toggleDrawer = useCallback(() => setIsDrawerOpen((prev) => !prev), []);
+  const contextValue = useMemo<CartContextValue>(() => {
+    const addItem = (product: Product, quantity = 1) => {
+      dispatch({ type: 'ADD_ITEM', payload: { product, quantity } });
+    };
 
-  const subtotal = useMemo(
-    () => items.reduce((acc, line) => acc + line.product.price * line.quantity, 0),
-    [items]
-  );
+    const removeItem = (productId: string) => {
+      dispatch({ type: 'REMOVE_ITEM', payload: { productId } });
+    };
 
-  const value = useMemo(
-    () => ({
-      items,
-      subtotal,
+    const updateQuantity = (productId: string, quantity: number) => {
+      dispatch({ type: 'UPDATE_QUANTITY', payload: { productId, quantity } });
+    };
+
+    const clearCart = () => {
+      dispatch({ type: 'RESET' });
+    };
+
+    const total = state.items.reduce(
+      (sum, item) => sum + item.product.price * item.quantity,
+      0,
+    );
+
+    return {
+      items: state.items,
+      total,
       addItem,
       removeItem,
       updateQuantity,
-      clear,
-      isDrawerOpen,
-      openDrawer,
-      closeDrawer,
-      toggleDrawer
-    }),
-    [items, subtotal, addItem, removeItem, updateQuantity, clear, isDrawerOpen, openDrawer, closeDrawer, toggleDrawer]
-  );
+      clearCart,
+    };
+  }, [state.items]);
 
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+  return <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>;
 };
 
-export const useCartContext = (): CartContextValue => {
-  const context = React.useContext(CartContext);
+export const useCart = () => {
+  const context = useContext(CartContext);
+
   if (!context) {
-    throw new Error('useCartContext must be used within a CartProvider');
+    throw new Error('useCart must be used within a CartProvider');
   }
+
   return context;
 };

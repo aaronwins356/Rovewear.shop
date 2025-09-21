@@ -1,22 +1,17 @@
-import React from 'react';
-import { Seo } from '../components/Seo';
-
-export const PrivacyPage: React.FC = () => (
-  <div className="mx-auto max-w-3xl px-6 pb-24 pt-12 space-y-8">
-    <Seo title="Privacy Policy | ROVE Eyewear" />
-    <h1 className="text-4xl uppercase tracking-[0.3em]">Privacy Policy</h1>
-    <p className="text-sm text-white/70">
-      ROVE collects only the data required to deliver your eyewear and provide concierge support. We do not sell or rent
-      personal information. Data is processed through secure, PCI-compliant partners including Stripe and Shopify for
-      payment processing.
+const PrivacyPage = () => (
+  <div className="mx-auto w-full max-w-3xl px-6 py-24 space-y-6">
+    <p className="text-xs uppercase tracking-[0.4em] text-neutral-400">Privacy</p>
+    <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">Your data, protected.</h1>
+    <p className="text-sm text-neutral-500">
+      We use cookies to personalise your experience and analyse engagement. You can opt out at any time. Customer profiles
+      and order history are encrypted and stored securely. For integrations such as Stripe, manage API keys via Vercel
+      environment variables.
     </p>
-    <p className="text-sm text-white/70">
-      When you create an account or join our newsletter, we store your preferences to personalize future releases. You
-      may request deletion of your account at any time by contacting privacy@rovewear.shop.
-    </p>
-    <p className="text-sm text-white/70">
-      Cookies are used for analytics and personalization. You can adjust preferences through your browser or by emailing
-      support@rovewear.shop.
+    <p className="text-sm text-neutral-500">
+      Update this copy with your legal policy. Add consent banners or analytics scripts directly in <code>index.html</code>
+      or through Vercel integrations.
     </p>
   </div>
 );
+
+export default PrivacyPage;

@@ -1,77 +1,103 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { Button } from './Button';
-import { useCart } from '../hooks/useCart';
-import { Link, useRouter } from '../router/RouterProvider';
+import { useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
-const categories = [
-  { label: 'Aviators', href: '/products?category=Aviators' },
-  { label: 'Browline', href: '/products?category=Browline' },
-  { label: 'Square', href: '/products?category=Square' }
+type NavBarProps = {
+  onCartToggle: () => void;
+};
+
+const navLinks = [
+  { label: 'Home', to: '/' },
+  { label: 'Collection', to: '/products' },
+  { label: 'About', to: '/about' },
 ];
 
-export const NavBar: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState<boolean>(false);
-  const { items, toggleDrawer } = useCart();
-  const { location } = useRouter();
+const NavBar = ({ onCartToggle }: NavBarProps) => {
+  const { items } = useCart();
+  const location = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 32);
-    };
-    handleScroll();
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const itemCount = items.reduce((count, item) => count + item.quantity, 0);
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [location.pathname]);
-
-  const totalItems = items.reduce((acc, item) => acc + item.quantity, 0);
-
-  const searchParams = new URLSearchParams(location.search);
+  const handleNavigate = () => {
+    setIsMenuOpen(false);
+  };
 
   return (
-    <motion.header
-      className={`fixed top-0 z-50 w-full transition-colors ${
-        isScrolled ? 'bg-black/80 backdrop-blur-xl border-b border-white/10' : 'bg-transparent'
-      }`}
-      initial={{ y: -40, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6 }}
-    >
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 text-sm uppercase tracking-[0.3em]">
-        <Link to="/" className="text-lg font-bold tracking-[0.4em]">
+    <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/90 backdrop-blur">
+      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
+        <Link to="/" className="text-xl font-semibold tracking-tight" onClick={handleNavigate}>
           ROVE
         </Link>
-        <div className="hidden gap-6 md:flex">
-          {categories.map((category) => {
-            const isActive =
-              location.pathname.startsWith('/products') &&
-              searchParams.get('category') === category.label;
-            return (
-              <Link
-                key={category.href}
-                to={category.href}
-                className={`transition hover:text-brand.light ${
-                  isActive ? 'text-brand.light' : 'text-white/70'
-                }`}
-              >
-                {category.label}
-              </Link>
-            );
-          })}
-        </div>
-        <div className="flex items-center gap-3">
-          <Link to="/account" className="hidden text-white/70 transition hover:text-white md:inline-flex">
-            Account
+        <nav className="hidden gap-8 text-sm font-medium uppercase tracking-[0.2em] text-neutral-500 lg:flex">
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              onClick={handleNavigate}
+              className={({ isActive }) =>
+                `transition-colors ${
+                  isActive || location.pathname.startsWith(link.to)
+                    ? 'text-neutral-900'
+                    : 'hover:text-neutral-800'
+                }`
+              }
+            >
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
+        <div className="flex items-center gap-4">
+          <Link
+            to="/products"
+            className="hidden rounded-full border border-neutral-900 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] transition-colors hover:bg-neutral-900 hover:text-white lg:inline-flex"
+            onClick={handleNavigate}
+          >
+            Explore
           </Link>
-          <Button variant="secondary" size="sm" onClick={toggleDrawer} aria-label="Open cart">
-            Cart {totalItems > 0 && <span className="ml-2 rounded-full bg-white px-2 py-0.5 text-xs text-black">{totalItems}</span>}
-          </Button>
+          <button
+            type="button"
+            onClick={onCartToggle}
+            className="relative rounded-full border border-neutral-900 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] transition-colors hover:bg-neutral-900 hover:text-white"
+            aria-label="Toggle cart"
+          >
+            Cart
+            {itemCount > 0 && (
+              <span className="absolute -right-2 -top-2 inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-neutral-900 px-2 text-xs font-semibold text-white">
+                {itemCount}
+              </span>
+            )}
+          </button>
+          <button
+            type="button"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 lg:hidden"
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+            aria-label="Toggle navigation"
+            aria-expanded={isMenuOpen}
+          >
+            <span className="block h-0.5 w-5 bg-neutral-900" />
+          </button>
         </div>
-      </nav>
-    </motion.header>
+      </div>
+      {isMenuOpen && (
+        <div className="border-t border-neutral-200 bg-white px-6 py-4 lg:hidden">
+          <nav className="flex flex-col gap-4 text-sm font-semibold uppercase tracking-[0.2em] text-neutral-600">
+            {navLinks.map((link) => (
+              <NavLink key={link.to} to={link.to} onClick={handleNavigate}>
+                {link.label}
+              </NavLink>
+            ))}
+            <Link to="/privacy" onClick={handleNavigate}>
+              Privacy
+            </Link>
+            <Link to="/terms" onClick={handleNavigate}>
+              Terms
+            </Link>
+          </nav>
+        </div>
+      )}
+    </header>
   );
 };
+
+export default NavBar;

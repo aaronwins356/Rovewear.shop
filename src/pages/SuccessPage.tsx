@@ -1,23 +1,19 @@
-import React from 'react';
-import { ButtonLink } from '../components/ButtonLink';
-import { Seo } from '../components/Seo';
+import { Link } from 'react-router-dom';
 
-export const SuccessPage: React.FC = () => (
-  <div className="mx-auto max-w-3xl px-6 pb-24 pt-12 text-center">
-    <Seo title="Order Confirmed | ROVE Eyewear" />
-    <div className="rounded-3xl border border-white/10 bg-white/5 p-12">
-      <p className="mb-4 text-xs uppercase tracking-[0.3em] text-green-300">Success</p>
-      <h1 className="mb-6 text-4xl uppercase tracking-[0.3em]">Thank you</h1>
-      <p className="mb-8 text-sm text-white/70">
-        Your order is confirmed. Look out for a confirmation email with shipping details. Our atelier is preparing your
-        frames with care.
-      </p>
-      <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-        <ButtonLink to="/products">Shop More Frames</ButtonLink>
-        <ButtonLink to="/" variant="secondary">
-          Back to home
-        </ButtonLink>
-      </div>
-    </div>
+const SuccessPage = () => (
+  <div className="mx-auto w-full max-w-3xl px-6 py-24 space-y-6 text-center">
+    <p className="text-xs uppercase tracking-[0.4em] text-neutral-400">Success</p>
+    <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">Payment confirmed.</h1>
+    <p className="text-sm text-neutral-500">
+      Thank you for choosing ROVE. Your order is being prepared and you will receive shipping updates shortly.
+    </p>
+    <Link
+      to="/products"
+      className="inline-flex rounded-full border border-neutral-900 px-5 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-neutral-900 transition hover:bg-neutral-900 hover:text-white"
+    >
+      Continue exploring
+    </Link>
   </div>
 );
+
+export default SuccessPage;

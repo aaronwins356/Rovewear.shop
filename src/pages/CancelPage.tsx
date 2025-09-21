@@ -1,22 +1,19 @@
-import React from 'react';
-import { ButtonLink } from '../components/ButtonLink';
-import { Seo } from '../components/Seo';
+import { Link } from 'react-router-dom';
 
-export const CancelPage: React.FC = () => (
-  <div className="mx-auto max-w-3xl px-6 pb-24 pt-12 text-center">
-    <Seo title="Checkout Cancelled | ROVE Eyewear" />
-    <div className="rounded-3xl border border-white/10 bg-white/5 p-12">
-      <p className="mb-4 text-xs uppercase tracking-[0.3em] text-amber-300">Payment Incomplete</p>
-      <h1 className="mb-6 text-4xl uppercase tracking-[0.3em]">Order paused</h1>
-      <p className="mb-8 text-sm text-white/70">
-        Your Stripe checkout was cancelled. Your cart is saved so you can finish checking out when you’re ready.
-      </p>
-      <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-        <ButtonLink to="/checkout">Return to checkout</ButtonLink>
-        <ButtonLink to="/products" variant="secondary">
-          Continue shopping
-        </ButtonLink>
-      </div>
-    </div>
+const CancelPage = () => (
+  <div className="mx-auto w-full max-w-3xl px-6 py-24 space-y-6 text-center">
+    <p className="text-xs uppercase tracking-[0.4em] text-neutral-400">Checkout cancelled</p>
+    <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">Payment not completed.</h1>
+    <p className="text-sm text-neutral-500">
+      Your card was not charged. You can revisit your cart, update selections, and try again whenever you are ready.
+    </p>
+    <Link
+      to="/cart"
+      className="inline-flex rounded-full border border-neutral-900 px-5 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-neutral-900 transition hover:bg-neutral-900 hover:text-white"
+    >
+      Return to cart
+    </Link>
   </div>
 );
+
+export default CancelPage;
