@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="g4" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#020617" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#g4)" />
+  <path d="M180 240 Q400 160 620 240" fill="none" stroke="#f1f5f9" stroke-width="12" />
+  <rect x="170" y="250" width="190" height="170" rx="45" fill="none" stroke="#facc15" stroke-width="16" />
+  <rect x="440" y="250" width="190" height="170" rx="45" fill="none" stroke="#facc15" stroke-width="16" />
+  <rect x="360" y="310" width="80" height="20" fill="#f1f5f9" />
+  <text x="400" y="520" fill="#e2e8f0" font-family="'Helvetica Neue', Arial" font-size="42" text-anchor="middle">ROVE Wayfarer</text>
+</svg>

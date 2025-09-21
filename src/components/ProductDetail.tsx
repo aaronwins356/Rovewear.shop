@@ -1,112 +1,55 @@
-"use client";
-
-import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
-import type { Product } from "@/lib/types";
-import { ProductGallery } from "./ProductGallery";
-import { SizeGuideModal } from "./SizeGuideModal";
-import { useCart } from "./CartProvider";
-import { Button } from "./Button";
+import React from 'react';
+import { ProductGallery } from './ProductGallery';
+import { Button } from './Button';
+import type { Product } from '../types/product';
+import { useCart } from '../hooks/useCart';
+import { formatCurrency } from '../utils/formatCurrency';
 
 interface ProductDetailProps {
   product: Product;
 }
 
-export function ProductDetail({ product }: ProductDetailProps) {
-  const [activeVariantIndex, setActiveVariantIndex] = useState(0);
-  const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
+export const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
   const { addItem } = useCart();
 
-  const variantOptions = useMemo(() => (product.variants.length > 0 ? product.variants : [null]), [product.variants]);
-  const activeVariant = variantOptions[activeVariantIndex];
-  const price = activeVariant?.price ?? product.price;
+  const galleryImages = [product.image, product.image, product.image];
 
   return (
-    <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr]">
-      <ProductGallery images={product.gallery} title={product.title} />
-
+    <div className="grid gap-12 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+      <ProductGallery images={galleryImages} />
       <div className="space-y-8">
         <div className="space-y-4">
-          <p className="text-xs uppercase tracking-[0.4em] text-slate-400">{product.categories.join(" • ")}</p>
-          <h1 className="text-3xl font-semibold uppercase tracking-[0.35em] text-white md:text-4xl">
-            {product.title}
-          </h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="prose prose-invert max-w-none text-sm text-slate-300"
-            dangerouslySetInnerHTML={{ __html: product.descriptionHtml || "<p>A statement frame crafted for clarity.</p>" }}
-          />
+          <p className="text-xs uppercase tracking-[0.3em] text-white/50">{product.category}</p>
+          <h1 className="text-4xl font-semibold uppercase tracking-[0.2em] text-white">{product.name}</h1>
+          <p className="text-lg text-white/70">{formatCurrency(product.price)}</p>
+          <p className="text-sm text-white/60">{product.description}</p>
         </div>
-
-        <div className="space-y-3">
-          <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Colorways</p>
-          <div className="flex flex-wrap gap-2">
-            {product.variants.map((variant, index) => {
-              const isActive = index === activeVariantIndex;
-              return (
-                <button
-                  key={variant.color}
-                  type="button"
-                  className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] transition ${
-                    isActive
-                      ? "border-white bg-white text-black"
-                      : "border-white/20 bg-transparent text-white hover:border-white/60"
-                  }`}
-                  onClick={() => setActiveVariantIndex(index)}
-                >
-                  {variant.color}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6">
-          <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Specs</p>
-          <dl className="grid grid-cols-2 gap-3 text-xs uppercase tracking-[0.2em] text-slate-300">
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-white/60">Fit Specs</p>
+          <dl className="grid grid-cols-3 gap-4 text-center text-sm uppercase tracking-[0.2em] text-white">
             <div>
-              <dt>Lens Width</dt>
-              <dd className="text-lg font-semibold text-white">{product.specs.lensWidth ?? "—"} mm</dd>
+              <dt className="text-xs text-white/50">Lens</dt>
+              <dd className="text-lg">{product.lensWidth}mm</dd>
             </div>
             <div>
-              <dt>Bridge</dt>
-              <dd className="text-lg font-semibold text-white">{product.specs.bridgeWidth ?? "—"} mm</dd>
+              <dt className="text-xs text-white/50">Bridge</dt>
+              <dd className="text-lg">{product.bridgeWidth}mm</dd>
             </div>
             <div>
-              <dt>Temple</dt>
-              <dd className="text-lg font-semibold text-white">{product.specs.templeLength ?? "—"} mm</dd>
-            </div>
-            <div>
-              <dt>Frame Width</dt>
-              <dd className="text-lg font-semibold text-white">{product.specs.frameWidth ?? "—"} mm</dd>
+              <dt className="text-xs text-white/50">Temple</dt>
+              <dd className="text-lg">{product.templeLength}mm</dd>
             </div>
           </dl>
-          <button
-            type="button"
-            className="text-xs font-semibold uppercase tracking-[0.3em] text-white underline decoration-dotted decoration-white/50"
-            onClick={() => setSizeGuideOpen(true)}
-          >
-            View full size guide
-          </button>
         </div>
-
-        <div className="flex flex-col gap-4 rounded-3xl border border-white/10 bg-white/5 p-6">
-          <div className="flex items-center justify-between">
-            <span className="text-sm uppercase tracking-[0.3em] text-slate-400">Investment</span>
-            <span className="text-2xl font-semibold text-white">${price?.toFixed(2) ?? "N/A"}</span>
-          </div>
-          <Button type="button" size="lg" onClick={() => addItem(product.id, activeVariant?.color)}>
-            Add to Cart
+        <div className="flex flex-col gap-4 sm:flex-row">
+          <Button size="lg" onClick={() => addItem(product)}>
+            Add to cart
           </Button>
-          <p className="text-xs text-slate-400">
-            Secure Stripe checkout. Anti-glare hard-coat, blue-light filter, and protective case included.
-          </p>
+          <Button variant="secondary" size="lg">
+            Book a virtual fitting
+          </Button>
         </div>
       </div>
-
-      <SizeGuideModal open={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} specs={product.specs} />
     </div>
   );
-}
+};
