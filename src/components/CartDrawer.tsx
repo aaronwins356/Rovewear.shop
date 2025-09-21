@@ -6,6 +6,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "./CartProvider";
+import { Button } from "./Button";
 
 const STRIPE_CHECKOUT_PATH = "/api/checkout";
 
@@ -160,19 +161,12 @@ export function CartDrawer() {
                         </p>
                         <form method="post" action={STRIPE_CHECKOUT_PATH} className="mt-6 space-y-3">
                           <input type="hidden" name="payload" value={JSON.stringify(stripePayload)} />
-                          <button
-                            type="submit"
-                            className="flex w-full items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-black transition hover:bg-slate-200"
-                          >
+                          <Button type="submit" size="md" className="w-full">
                             Checkout with Stripe
-                          </button>
-                          <button
-                            type="button"
-                            className="w-full rounded-full border border-white/20 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200 transition hover:border-white/40"
-                            onClick={clear}
-                          >
+                          </Button>
+                          <Button type="button" variant="secondary" size="md" className="w-full" onClick={clear}>
                             Clear cart
-                          </button>
+                          </Button>
                         </form>
                       </div>
                     ) : null}

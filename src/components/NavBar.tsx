@@ -9,6 +9,11 @@ import { getAllProducts, getProductCategories } from "@/lib/products";
 import { useCart } from "./CartProvider";
 
 const LOGO_SRC = "https://rovewear.shop/wp-content/uploads/2025/09/1-1.png";
+const primaryLinks = [
+  { href: "/products", label: "Catalog" },
+  { href: "/about", label: "About" },
+  { href: "/checkout", label: "Checkout" },
+];
 
 export function NavBar() {
   const categories = useMemo(() => getProductCategories(), []);
@@ -35,6 +40,16 @@ export function NavBar() {
           </Link>
 
           <div className="hidden items-center gap-6 md:flex">
+            {primaryLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300 transition hover:text-white"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <span className="h-4 w-px bg-white/10" aria-hidden />
             {categories.map((category) => (
               <button
                 key={category}
@@ -156,7 +171,7 @@ export function NavBar() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-40 bg-black/90 backdrop-blur"
           >
-            <div className="mx-auto flex h-full max-w-md flex-col gap-4 px-6 py-12">
+            <div className="mx-auto flex h-full max-w-md flex-col gap-6 px-6 py-12">
               <div className="flex items-center justify-between">
                 <span className="text-sm uppercase tracking-[0.4em] text-slate-400">Categories</span>
                 <button
@@ -167,6 +182,19 @@ export function NavBar() {
                 >
                   <XMarkIcon className="h-5 w-5" />
                 </button>
+              </div>
+              <div className="grid gap-3">
+                {primaryLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs uppercase tracking-[0.3em] text-white"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <span>{link.label}</span>
+                    <span className="text-[10px] text-slate-500">Explore</span>
+                  </Link>
+                ))}
               </div>
               <div className="grid gap-4">
                 {categories.map((category) => (

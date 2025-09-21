@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Product } from "@/lib/types";
 import { useCart } from "./CartProvider";
+import { Button } from "./Button";
 
 interface ProductCardProps {
   product: Product;
@@ -67,13 +68,14 @@ export function ProductCard({ product }: ProductCardProps) {
           <span className="text-sm font-semibold uppercase tracking-[0.3em] text-white">
             ${price?.toFixed(2) ?? "N/A"}
           </span>
-          <button
+          <Button
             type="button"
-            className="rounded-full border border-white/20 px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-white transition hover:border-white/60"
+            variant="secondary"
+            size="sm"
             onClick={() => addItem(product.id, activeVariant?.color)}
           >
             Quick Add
-          </button>
+          </Button>
         </div>
       </div>
     </motion.article>
