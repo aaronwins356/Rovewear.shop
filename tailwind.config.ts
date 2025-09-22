@@ -1,17 +1,17 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
       colors: {
         brand: {
-          DEFAULT: "#047857",
-        },
-      },
-    },
+          DEFAULT: "#047857"
+        }
+      }
+    }
   },
-  plugins: [],
+  plugins: []
 };
 
 export default config;

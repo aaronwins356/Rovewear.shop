@@ -1,4 +1,7 @@
-import type { Product } from "../data/products";
+"use client";
+
+import Image from "next/image";
+import type { Product } from "@/data/products";
 
 interface ProductCardProps {
   product: Product;
@@ -27,11 +30,16 @@ export function ProductCard({ product, isActive = false, onSelect }: ProductCard
       }}
       aria-pressed={isActive}
     >
-      <img
-        src={product.image}
-        alt=""
-        className="h-40 w-full rounded-2xl bg-emerald-50 object-contain"
-      />
+      <div className="h-40 w-full overflow-hidden rounded-2xl bg-emerald-50">
+        <Image
+          src={product.image}
+          alt=""
+          width={256}
+          height={160}
+          className="h-full w-full object-contain"
+          priority={isActive}
+        />
+      </div>
       <div className="space-y-2 text-left">
         <div className="flex flex-wrap gap-2">
           {product.tags.map((tag) => (

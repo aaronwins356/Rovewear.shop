@@ -1,10 +1,13 @@
+"use client";
+
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import {
   PRODUCTS_DATA_URL,
   fetchProductsFromJson,
-  getProductById,
-} from "../data/products";
-import type { Product } from "../data/products";
+  getProductById
+} from "@/data/products";
+import type { Product } from "@/data/products";
 import { ProductCard } from "./ProductCard";
 
 export function ProductShowcase() {
@@ -90,11 +93,16 @@ export function ProductShowcase() {
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-emerald-700">Product Insight</p>
               <h3 className="text-2xl font-semibold text-neutral-900">{selectedProduct.name}</h3>
             </div>
-            <img
-              src={selectedProduct.image}
-              alt={selectedProduct.name}
-              className="h-52 w-full rounded-2xl bg-white object-contain shadow-inner"
-            />
+            <div className="h-52 w-full overflow-hidden rounded-2xl bg-white">
+              <Image
+                src={selectedProduct.image}
+                alt={selectedProduct.name}
+                width={320}
+                height={208}
+                className="h-full w-full object-contain"
+                priority
+              />
+            </div>
             <p className="text-base leading-relaxed text-neutral-700">{selectedProduct.description}</p>
             <dl className="space-y-2 text-sm text-neutral-600">
               <div className="flex items-center justify-between rounded-2xl bg-white/80 px-4 py-3">
