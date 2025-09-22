@@ -1,14 +1,72 @@
-import { useMemo, useState } from "react";
-import { getProductById, products } from "../data/products";
+import { useEffect, useMemo, useState } from "react";
+import {
+  PRODUCTS_DATA_URL,
+  fetchProductsFromJson,
+  getProductById,
+} from "../data/products";
 import type { Product } from "../data/products";
 import { ProductCard } from "./ProductCard";
 
 export function ProductShowcase() {
-  const [selectedId, setSelectedId] = useState<string>(products[0]?.id ?? "");
+  const [products, setProducts] = useState<Product[]>([]);
+  const [selectedId, setSelectedId] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadProducts() {
+      try {
+        setIsLoading(true);
+        // The storefront now reads placeholder inventory from the static JSON manifest shipped in /public.
+        const manifest = await fetchProductsFromJson();
+
+        if (!isMounted) {
+          return;
+        }
+
+        setProducts(manifest);
+        setSelectedId((current) => current || manifest[0]?.id || "");
+        setError(null);
+      } catch (caught) {
+        if (!isMounted) {
+          return;
+        }
+
+        const message = caught instanceof Error ? caught.message : "Unknown error";
+        setError(message);
+        setProducts([]);
+        setSelectedId("");
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    loadProducts();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const selectedProduct: Product | undefined = useMemo(() => {
-    return getProductById(selectedId);
-  }, [selectedId]);
+    return getProductById(products, selectedId);
+  }, [products, selectedId]);
+
+  const renderStatus = () => {
+    if (isLoading) {
+      return "Loading products…";
+    }
+
+    if (error) {
+      return `Unable to load products from ${PRODUCTS_DATA_URL}.`;
+    }
+
+    return "Select a product to view the details.";
+  };
 
   return (
     <section className="mx-auto flex w-full max-w-6xl flex-col gap-12">
@@ -69,7 +127,7 @@ export function ProductShowcase() {
           </aside>
         ) : (
           <aside className="flex h-full items-center justify-center rounded-3xl border border-dashed border-emerald-200 p-6 text-center text-neutral-500">
-            Select a product to view the details.
+            {renderStatus()}
           </aside>
         )}
       </div>
