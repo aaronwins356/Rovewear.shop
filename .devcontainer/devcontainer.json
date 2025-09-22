@@ -1,14 +1,18 @@
 {
-  "name": "Rovewear Shop",
+  "name": "ROVE Storefront",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    }
+  },
   "postCreateCommand": "npm install",
   "customizations": {
     "vscode": {
-      "extensions": [
-        "esbenp.prettier-vscode",
-        "dbaeumer.vscode-eslint",
-        "bradlc.vscode-tailwindcss"
-      ]
+      "settings": {
+        "typescript.tsdk": "node_modules/typescript/lib"
+      },
+      "extensions": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"]
     }
   }
 }

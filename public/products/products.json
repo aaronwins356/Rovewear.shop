@@ -1,34 +1,140 @@
-[
-  {
-    "id": "wayfarer",
-    "name": "Wayfarer Frames",
-    "description": "Classic silhouettes crafted with plant-based acetate and polished steel hardware for everyday durability.",
-    "price": 185,
-    "image": "/products/wayfarer.svg",
-    "tags": ["best seller", "handcrafted"]
+{
+  "products": [
+    {
+      "_id": "sample-aurora",
+      "title": "Aurora Carbon",
+      "slug": "aurora-carbon",
+      "description": "Featherweight carbon fiber frames with adaptive photochromic lenses.",
+      "longDescription": "Aurora Carbon merges aerospace-grade carbon fiber with Zeiss optics for unrivaled clarity. Adjustable titanium nose pads and spring hinges create a weightless fit.",
+      "price": 365,
+      "currency": "USD",
+      "status": "inStock",
+      "tags": [
+        "polarized",
+        "sustainable"
+      ],
+      "categorySlugs": [
+        "performance",
+        "sun"
+      ],
+      "heroImage": {
+        "url": "/images/products/aurora-carbon-hero.svg",
+        "alt": "Aurora Carbon premium sunglasses"
+      },
+      "images": [
+        {
+          "url": "/images/products/aurora-carbon-hero.svg",
+          "alt": "Aurora Carbon sunglasses front view"
+        },
+        {
+          "url": "/images/products/aurora-carbon-side.svg",
+          "alt": "Aurora Carbon sunglasses side view"
+        }
+      ],
+      "specs": {
+        "lensWidth": "54 mm",
+        "bridgeWidth": "18 mm",
+        "templeLength": "140 mm",
+        "frameMaterial": "Reinforced carbon fiber",
+        "lensMaterial": "Zeiss photochromic"
+      },
+      "reviews": [
+        {
+          "_id": "review-1",
+          "name": "Ava Martinez",
+          "rating": 5,
+          "comment": "Lightweight, razor sharp optics, and the fit is exceptional.",
+          "createdAt": "2024-09-12"
+        }
+      ]
+    },
+    {
+      "_id": "sample-horizon",
+      "title": "Horizon Blue Light",
+      "slug": "horizon-blue-light",
+      "description": "Acetate frames with anti-fatigue blue light filtering.",
+      "price": 195,
+      "currency": "USD",
+      "status": "inStock",
+      "tags": [
+        "blue-light"
+      ],
+      "categorySlugs": [
+        "blue-light"
+      ],
+      "heroImage": {
+        "url": "/images/products/horizon-blue-light-hero.svg",
+        "alt": "Horizon blue light glasses"
+      },
+      "images": [
+        {
+          "url": "/images/products/horizon-blue-light-hero.svg",
+          "alt": "Horizon frame front view"
+        }
+      ],
+      "specs": {
+        "lensWidth": "52 mm",
+        "bridgeWidth": "19 mm",
+        "templeLength": "143 mm",
+        "frameMaterial": "Bio-acetate",
+        "lensMaterial": "BlueGuard anti-fatigue"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "_id": "cat-performance",
+      "title": "Performance",
+      "slug": "performance",
+      "description": "Engineered eyewear for athletes and explorers."
+    },
+    {
+      "_id": "cat-blue-light",
+      "title": "Blue Light",
+      "slug": "blue-light",
+      "description": "Protective lenses for digital work and late-night sessions."
+    },
+    {
+      "_id": "cat-accessories",
+      "title": "Accessories",
+      "slug": "accessories",
+      "description": "Luxury cases, cleaning rituals, and clip-ons."
+    }
+  ],
+  "marketing": {
+    "heroHeadline": "Precision eyewear for limitless horizons",
+    "heroSubheadline": "ROVE fuses sculptural design with innovation to deliver enduring clarity on and off the grid.",
+    "heroCtaLabel": "Discover the collection",
+    "heroCtaHref": "/catalog",
+    "newsletterHeadline": "Stay ahead of limited drops",
+    "newsletterSubheadline": "Join the inner circle for early access to capsule collections and exclusive studio events.",
+    "featuredProductSlugs": [
+      "aurora-carbon",
+      "horizon-blue-light"
+    ],
+    "featuredCategorySlugs": [
+      "performance",
+      "blue-light"
+    ],
+    "heroImage": {
+      "url": "/images/products/aurora-carbon-hero.svg",
+      "alt": "ROVE eyewear hero image"
+    }
   },
-  {
-    "id": "aviator",
-    "name": "Aviator Shades",
-    "description": "Featherweight alloy frames with polarized lenses that soften harsh light without muting natural color.",
-    "price": 205,
-    "image": "/products/aviator.svg",
-    "tags": ["limited", "polarized"]
-  },
-  {
-    "id": "browline",
-    "name": "Browline Readers",
-    "description": "A mindful blend of walnut veneer and matte stainless steel tuned for focus, journaling, and quiet mornings.",
-    "price": 165,
-    "image": "/products/browline.svg",
-    "tags": ["editor's pick"]
-  },
-  {
-    "id": "square",
-    "name": "Square Blue-Light",
-    "description": "Softly rounded corners and anti-reflective coatings help reset your rhythm when work stretches past sunset.",
-    "price": 150,
-    "image": "/products/square.svg",
-    "tags": ["new", "blue light"]
+  "siteSettings": {
+    "currency": "USD",
+    "supportEmail": "hello@rovewear.shop",
+    "supportPhone": "+1 (800) 555-0177",
+    "announcement": "Complimentary 2-day shipping on U.S. orders over $250",
+    "footerLinks": [
+      {
+        "label": "Style Guide",
+        "href": "/about"
+      },
+      {
+        "label": "Virtual Fitting",
+        "href": "/contact"
+      }
+    ]
   }
-]
+}
