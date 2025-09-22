@@ -26,16 +26,20 @@ npm run dev
 ```
 ├── index.html            # Vite entry document
 ├── public/               # Static assets (placeholder product imagery)
+├── public/
+│   └── products/
+│       ├── products.json # Placeholder inventory served with the built site
+│       └── *.svg         # Product illustrations referenced by components
 ├── src/
 │   ├── App.tsx           # Application shell
 │   ├── components/       # Reusable UI building blocks
-│   ├── data/products.ts  # Placeholder data powering list + detail views
+│   ├── data/products.ts  # Typed helpers for the JSON manifest
 │   └── styles/index.css  # Tailwind entry point + global styles
 ├── tailwind.config.ts    # Tailwind v4 configuration
 └── vite.config.ts        # Vite build + dev server settings
 ```
 
-The `public/products/` directory retains the placeholder imagery used across the storefront. The product grid and detail panel pull from `src/data/products.ts` so you can swap in a CMS, REST API, or e-commerce SDK later without rewriting UI components.
+The `public/products/` directory retains the placeholder imagery and the `products.json` manifest consumed by the storefront. Components load this static JSON file at runtime, so you can swap in a CMS, REST API, or e-commerce SDK later without rewriting UI components.
 
 ## Deployment
 
