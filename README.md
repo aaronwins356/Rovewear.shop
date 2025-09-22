@@ -1,6 +1,6 @@
 # ROVE Storefront
 
-ROVE is a premium eyewear storefront built with Next.js App Router, Tailwind CSS, Sanity CMS, and Stripe Checkout. The stack is production-ready for Vercel deployments and includes tooling for automated testing, linting, and type safety.
+ROVE is a premium eyewear storefront built with the Next.js App Router, Tailwind CSS, Sanity CMS, and Stripe Checkout. The stack is production-ready for Vercel deployments and includes tooling for automated testing, linting, and type safety.
 
 ## Tech stack
 
@@ -13,20 +13,22 @@ ROVE is a premium eyewear storefront built with Next.js App Router, Tailwind CSS
 
 ## Getting started
 
-```bash
-npm install
-npm run dev
-```
+1. Install dependencies and start the development server:
 
-Environment variables (configure in `.env.local` or Vercel project settings):
+   ```bash
+   npm install
+   npm run dev
+   ```
 
-```bash
-NEXT_PUBLIC_SANITY_PROJECT_ID=
-NEXT_PUBLIC_SANITY_DATASET=production
-SANITY_API_VERSION=2024-09-01
-STRIPE_SECRET_KEY=
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-```
+2. Create a `.env.local` file with your Sanity credentials:
+
+   ```bash
+   NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
+   NEXT_PUBLIC_SANITY_DATASET=production
+   SANITY_API_READ_TOKEN=your_token
+   ```
+
+   `SANITY_API_VERSION` is optional—the app defaults to `2024-09-01` if it is not supplied. Never commit real tokens to source control; store them in Vercel Project Settings when deploying.
 
 ## Scripts
 
@@ -40,7 +42,9 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
 ## Sanity Studio
 
-The studio is exposed at `/studio` and uses the schemas in `src/sanity/schemas`. From the studio you can manage products, categories, marketing content, and site settings such as the homepage hero copy and footer links. Updates propagate to the storefront without code deployments thanks to GROQ queries and ISR-free data fetching.
+The studio is exposed at `/studio` and uses the schemas in `src/sanity/schemas`. From the studio you can manage products, categories, marketing content, and site settings such as the homepage hero copy and footer links. Updates propagate to the storefront without code deployments thanks to GROQ queries and ISR-free data fetching. Use the `SANITY_API_READ_TOKEN` to enable draft previews during authenticated sessions.
+
+Product placeholders used for skeleton states remain in `public/products/products.json`, which allows the storefront to render meaningful fallback data before live Sanity content is available.
 
 ## Dropshipping integration
 
@@ -52,5 +56,14 @@ GitHub Actions should run `npm run lint`, `npm run typecheck`, `npm test`, and o
 
 ## Deployment
 
-The project is optimized for Vercel. `vercel.json` enforces clean URLs and uses the standard Next.js build commands. Docker and Dev Container configuration enable cloud-based development.
+The project is optimized for Vercel. `vercel.json` mirrors the dashboard configuration so builds succeed without manual tweaks:
+
+- Install Command: `npm install --legacy-peer-deps`
+- Build Command: `npm run build`
+- Output Directory: `.next`
+- Node.js version: `^20.18.0` (inherited from `package.json`)
+
+Docker and Dev Container configuration enable cloud-based development.
+
+When you push changes, Vercel installs dependencies, runs the Next.js build, and deploys the `.next` output directory. Sanity Studio remains available at `/studio` in every environment so your merchandising team can edit products directly in the deployed app.
 
