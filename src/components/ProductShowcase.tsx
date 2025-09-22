@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   PRODUCTS_DATA_URL,
   fetchProductsFromJson,
@@ -12,61 +12,52 @@ export function ProductShowcase() {
   const [selectedId, setSelectedId] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
-  useEffect(() => {
-    let isMounted = true;
+  const loadProducts = useCallback(async () => {
+    abortControllerRef.current?.abort();
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
 
-    async function loadProducts() {
-      try {
-        setIsLoading(true);
-        // The storefront now reads placeholder inventory from the static JSON manifest shipped in /public.
-        const manifest = await fetchProductsFromJson();
+    try {
+      setIsLoading(true);
+      // The storefront reads placeholder inventory from the static JSON manifest shipped in /public/products.
+      const manifest = await fetchProductsFromJson(controller.signal);
 
-        if (!isMounted) {
-          return;
-        }
+      if (manifest.length === 0) {
+        throw new Error("The product manifest is empty.");
+      }
 
-        setProducts(manifest);
-        setSelectedId((current) => current || manifest[0]?.id || "");
-        setError(null);
-      } catch (caught) {
-        if (!isMounted) {
-          return;
-        }
+      setProducts(manifest);
+      setSelectedId((current) => current || manifest[0]?.id || "");
+      setError(null);
+    } catch (caught) {
+      if (controller.signal.aborted) {
+        return;
+      }
 
-        const message = caught instanceof Error ? caught.message : "Unknown error";
-        setError(message);
-        setProducts([]);
-        setSelectedId("");
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
+      const message = caught instanceof Error ? caught.message : "Unknown error while loading products.";
+      setError(`Unable to load products from ${PRODUCTS_DATA_URL}. ${message}`);
+      setProducts([]);
+      setSelectedId("");
+    } finally {
+      if (!controller.signal.aborted) {
+        setIsLoading(false);
       }
     }
+  }, []);
 
+  useEffect(() => {
     loadProducts();
 
     return () => {
-      isMounted = false;
+      abortControllerRef.current?.abort();
     };
-  }, []);
+  }, [loadProducts]);
 
   const selectedProduct: Product | undefined = useMemo(() => {
     return getProductById(products, selectedId);
   }, [products, selectedId]);
-
-  const renderStatus = () => {
-    if (isLoading) {
-      return "Loading products…";
-    }
-
-    if (error) {
-      return `Unable to load products from ${PRODUCTS_DATA_URL}.`;
-    }
-
-    return "Select a product to view the details.";
-  };
 
   return (
     <section className="mx-auto flex w-full max-w-6xl flex-col gap-12">
@@ -127,7 +118,20 @@ export function ProductShowcase() {
           </aside>
         ) : (
           <aside className="flex h-full items-center justify-center rounded-3xl border border-dashed border-emerald-200 p-6 text-center text-neutral-500">
-            {renderStatus()}
+            <div className="space-y-4">
+              <p className="text-sm leading-relaxed">
+                {isLoading ? "Loading products…" : error ?? `Select a product to view the details from ${PRODUCTS_DATA_URL}.`}
+              </p>
+              {!isLoading && error ? (
+                <button
+                  type="button"
+                  onClick={loadProducts}
+                  className="rounded-full bg-emerald-700 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-white transition hover:-translate-y-0.5 hover:bg-emerald-800"
+                >
+                  Retry loading
+                </button>
+              ) : null}
+            </div>
           </aside>
         )}
       </div>
