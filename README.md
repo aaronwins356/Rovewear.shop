@@ -1,53 +1,56 @@
-# Grounded Living Storefront
+# Rovewear Shop
 
-Grounded Living is a Next.js 15 + Sanity + Tailwind CSS storefront starter designed for Vercel deployments. The project pairs the App Router with a live Sanity Studio so editorial content and product data can be managed alongside the customer-facing site.
+Rovewear Shop is a Vite + React + TypeScript storefront starter configured for Tailwind CSS v4 and Vercel deployments. The app includes curated placeholder inventory and product insight panels so you can focus on wiring real data sources or connecting a headless CMS.
 
 ## Requirements
 
 - Node.js 20.18 LTS (matching the `engines` field)
 - npm 10+
 
-## Getting Started
+## Clean Reinstall
 
-The project is configured to install without peer dependency overrides. If you ever need to start from scratch, run the following commands in order:
+If dependencies ever drift or you need to start fresh in Codespaces, a local terminal, or another cloud IDE, run these commands in order:
 
 ```bash
-# reinstall from scratch
 rm -rf node_modules package-lock.json
 npm install
 npm run dev
 ```
 
-- `npm run dev` starts the Next.js development server on `http://localhost:3000`.
-- `npm run studio` runs the same dev server on port 3333 to focus on Sanity Studio.
+- `npm run dev` starts the Vite development server on <http://localhost:3000>.
+- `npm run build` bundles the app for production into `dist/`.
+- `npm run preview` serves the built bundle locally for final verification.
 
-## Available Scripts
+## Project Structure
 
-- `npm run build` – build the production bundle for Vercel.
-- `npm run start` – serve the production build locally.
-- `npm run lint` – run ESLint using `next/core-web-vitals` rules.
-
-## Environment Variables
-
-Create a `.env.local` file and provide the following values before running the Sanity client or Studio:
-
-```bash
-NEXT_PUBLIC_SANITY_PROJECT_ID=your-project-id
-NEXT_PUBLIC_SANITY_DATASET=production
-NEXT_PUBLIC_SANITY_API_VERSION=2024-10-01
-SANITY_API_TOKEN= # optional, only required for authenticated requests
+```
+├── index.html            # Vite entry document
+├── public/               # Static assets (placeholder product imagery)
+├── src/
+│   ├── App.tsx           # Application shell
+│   ├── components/       # Reusable UI building blocks
+│   ├── data/products.ts  # Placeholder data powering list + detail views
+│   └── styles/index.css  # Tailwind entry point + global styles
+├── tailwind.config.ts    # Tailwind v4 configuration
+└── vite.config.ts        # Vite build + dev server settings
 ```
 
-> The project fails fast during compilation if the Sanity project ID is missing to avoid deploying with misconfigured credentials.
-
-## Tailwind CSS v4
-
-Tailwind CSS v4 is configured via `@tailwindcss/postcss` and `tailwind.config.ts`. Global styles live in `app/globals.css` and are automatically applied by the root layout.
-
-## Sanity Studio
-
-The embedded Studio is available at `/studio` in development and production. It uses the shared configuration in `sanity.config.ts` so schema updates and desk structure live alongside the application code.
+The `public/products/` directory retains the placeholder imagery used across the storefront. The product grid and detail panel pull from `src/data/products.ts` so you can swap in a CMS, REST API, or e-commerce SDK later without rewriting UI components.
 
 ## Deployment
 
-Deploy directly to Vercel – no custom rewrites are required because the App Router handles routing server-side. Ensure the environment variables above are defined in the Vercel dashboard before triggering a build.
+The included `vercel.json` configures Vercel to run `npm run build` (which maps to `vite build`) and serve the `dist/` directory. A single-page-app fallback ensures direct URL visits resolve correctly after client-side routing is introduced.
+
+Pushes to `main` (or any branch connected to Vercel) trigger automatic builds—no manual uploads or file copies are required.
+
+## Tailwind CSS v4
+
+Tailwind CSS v4 is enabled through the `@tailwindcss/postcss` plugin. Styles are imported once in `src/styles/index.css`, and the `content` array in `tailwind.config.ts` scans the Vite entry document plus every component in `src/` to tree-shake unused classes.
+
+## Codespaces / Devcontainers
+
+A `.devcontainer/devcontainer.json` file pins the Node.js version and recommends VS Code extensions so you can open the project remotely with consistent tooling.
+
+## Environment Variables
+
+No environment variables are required for the placeholder storefront. Introduce them as you connect APIs (for example, payment gateways) and document the values in this section.

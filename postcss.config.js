@@ -1,13 +1,6 @@
-/**
- * Tailwind CSS v4 exposes a dedicated PostCSS plugin entrypoint.
- * Keeping the plugin list declarative avoids the legacy warning about
- * using tailwindcss directly as the PostCSS plugin.
- */
-const config = {
+module.exports = {
   plugins: {
     "@tailwindcss/postcss": {},
-    autoprefixer: {}
-  }
+    autoprefixer: {},
+  },
 };
-
-module.exports = config;

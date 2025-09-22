@@ -1,0 +1,34 @@
+[
+  {
+    "id": "wayfarer",
+    "name": "Wayfarer Frames",
+    "description": "Classic silhouettes crafted with plant-based acetate and polished steel hardware for everyday durability.",
+    "price": 185,
+    "image": "/products/wayfarer.svg",
+    "tags": ["best seller", "handcrafted"]
+  },
+  {
+    "id": "aviator",
+    "name": "Aviator Shades",
+    "description": "Featherweight alloy frames with polarized lenses that soften harsh light without muting natural color.",
+    "price": 205,
+    "image": "/products/aviator.svg",
+    "tags": ["limited", "polarized"]
+  },
+  {
+    "id": "browline",
+    "name": "Browline Readers",
+    "description": "A mindful blend of walnut veneer and matte stainless steel tuned for focus, journaling, and quiet mornings.",
+    "price": 165,
+    "image": "/products/browline.svg",
+    "tags": ["editor's pick"]
+  },
+  {
+    "id": "square",
+    "name": "Square Blue-Light",
+    "description": "Softly rounded corners and anti-reflective coatings help reset your rhythm when work stretches past sunset.",
+    "price": 150,
+    "image": "/products/square.svg",
+    "tags": ["new", "blue light"]
+  }
+]
