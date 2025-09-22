@@ -1,81 +1,56 @@
-# Rovewear Shop
+# ROVE Storefront
 
-Rovewear Shop is a Next.js 14 (App Router) storefront starter configured with Tailwind CSS and TypeScript. It ships with placeholder inventory, product storytelling panels, and a newsletter capture component so you can focus on wiring real data sources or connecting a headless CMS.
+ROVE is a premium eyewear storefront built with Next.js App Router, Tailwind CSS, Sanity CMS, and Stripe Checkout. The stack is production-ready for Vercel deployments and includes tooling for automated testing, linting, and type safety.
 
-## Requirements
+## Tech stack
 
-- Node.js 20.18 LTS (matching the `engines` field)
-- npm 10+
+- Next.js 15 App Router with TypeScript
+- Tailwind CSS 4 with Framer Motion for interactions
+- Sanity v4 Studio at `/studio`
+- Stripe Checkout integration for payments
+- Jest, Testing Library, and Playwright for automated tests
+- Dockerfile and Dev Container for Codespaces
 
-## Installation & Scripts
-
-Install dependencies once:
+## Getting started
 
 ```bash
 npm install
+npm run dev
 ```
 
-Available scripts:
+Environment variables (configure in `.env.local` or Vercel project settings):
 
-- `npm run dev` – start the Next.js development server on <http://localhost:3000> for local iteration.
-- `npm run build` – create an optimized production build.
-- `npm run start` – serve the production build locally (useful for parity with Vercel).
-- `npm run lint` – run ESLint with the `next/core-web-vitals` ruleset.
-- `npm run typecheck` – verify TypeScript types without emitting compiled output.
-
-## Project Structure
-
-```
-├── public/                     # Static assets served as-is
-│   └── products/               # JSON manifest + product artwork
-├── src/
-│   ├── app/                    # Next.js App Router entry points
-│   │   ├── layout.tsx          # Root layout + metadata
-│   │   ├── page.tsx            # Homepage assembly
-│   │   └── globals.css         # Tailwind entry point + global styles
-│   ├── components/             # Reusable UI building blocks
-│   └── data/                   # Typed helpers + manifest loader
-├── tailwind.config.ts          # Tailwind configuration
-├── postcss.config.js           # PostCSS plugins (Tailwind + Autoprefixer)
-├── next.config.mjs             # Next.js configuration
-├── package.json                # Scripts + dependencies
-└── vercel.json                 # Deployment defaults for Vercel
+```bash
+NEXT_PUBLIC_SANITY_PROJECT_ID=
+NEXT_PUBLIC_SANITY_DATASET=production
+SANITY_API_VERSION=2024-09-01
+STRIPE_SECRET_KEY=
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
-## Product Data & Assets
+## Scripts
 
-All storefront products load at runtime from `public/products/products.json`. Each entry must provide:
+- `npm run dev` – start the development server
+- `npm run build` – create a production build
+- `npm run start` – run the production build locally
+- `npm run lint` – run ESLint with auto-fix
+- `npm run typecheck` – run TypeScript in noEmit mode
+- `npm test` – run Jest unit tests
+- `npm run test:e2e` – run Playwright end-to-end tests
 
-```json
-{
-  "id": "wayfarer",
-  "name": "Wayfarer Frames",
-  "description": "Classic silhouettes crafted with plant-based acetate...",
-  "price": 185,
-  "image": "/products/wayfarer.svg",
-  "tags": ["best seller", "handcrafted"]
-}
-```
+## Sanity Studio
 
-- Add or edit inventory by updating `products.json`.
-- Place matching imagery (SVGs, PNGs, JPEGs, etc.) inside `public/products/` and reference them by their `/products/<file>` path.
-- Runtime fetch errors surface in the UI with a retry button so editors know if the manifest or asset path needs attention.
+The studio is exposed at `/studio` and uses the schemas in `src/sanity/schemas`. From the studio you can manage products, categories, marketing content, and site settings such as the homepage hero copy and footer links. Updates propagate to the storefront without code deployments thanks to GROQ queries and ISR-free data fetching.
 
-## Deployment on Vercel
+## Dropshipping integration
 
-This repository follows Vercel best practices for Next.js projects:
+`src/lib/dropshipping.ts` provides a typed integration point for forwarding orders to a supplier API (Shopify, WooCommerce, or custom). Extend the placeholder function with real HTTP requests and map Stripe sessions to supplier payloads.
 
-1. Commit changes locally.
-2. Push to GitHub (or your connected Git provider).
-3. Vercel automatically runs `npm install` and `npm run build`, then serves the `.next/` output.
-4. Preview deployments are generated per branch; merge or promote the preview to production when it looks good.
+## Testing & CI
 
-No additional configuration is required—`vercel.json` simply keeps the build command explicit for clarity.
+GitHub Actions should run `npm run lint`, `npm run typecheck`, `npm test`, and optionally `npm run test:e2e`. Playwright requires the development server running (`npm run dev`) when tests execute.
 
-## Tailwind CSS
+## Deployment
 
-Tailwind CSS is configured via `tailwind.config.ts`, and class usage is automatically tree-shaken across the `app/`, `components/`, and `src/` directories. Global styles (including the Tailwind directives) live in `src/app/globals.css`.
+The project is optimized for Vercel. `vercel.json` enforces clean URLs and uses the standard Next.js build commands. Docker and Dev Container configuration enable cloud-based development.
 
-## Environment Variables
-
-No environment variables are required for the placeholder storefront. Introduce them as you connect APIs (for example, commerce providers or newsletter platforms) and document the values in this section.
